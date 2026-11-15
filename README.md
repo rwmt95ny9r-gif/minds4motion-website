@@ -1,2 +1,2 @@
 # minds4motion-website
-MINDS4MOTION Website
+MINDS4MOTION - Official Website
