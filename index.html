@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="MINDS4MOTION — think. feel. create. A creative space for thoughts, emotion, music, images and movement. #justcreative">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MINDS4MOTION — #justcreative">
+  <meta property="og:description" content="Think. Feel. Create. Making what moves us visible.">
+  <title>MINDS4MOTION — #justcreative</title>
+  <style>
+    :root{
+      --bg:#050505;--bg-2:#0b0b0c;--panel:#101012;--panel-2:#151517;
+      --text:#f7f7f5;--muted:#aaa9ad;--line:#2a2a2d;--accent:#e31b23;
+      --white:#fff;--max:1180px;--radius:28px
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{max-width:var(--max);margin:auto;padding:0 22px}
+    .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-size:1rem;letter-spacing:.22em;white-space:nowrap}
+    .brand b{font-weight:500}.brand .four{color:var(--accent)}
+    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.9rem}
+    .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+    .hero{min-height:calc(100vh - 84px);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:52px;padding:42px 0 82px}
+    .kicker{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+    h1{font-size:clamp(4rem,10vw,8.2rem);line-height:.88;letter-spacing:-.075em;margin:24px 0 26px;font-weight:570}
+    h1 .four{color:var(--accent)}
+    .hero-copy{font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.38;max-width:680px;color:#d9d9d9;letter-spacing:-.02em}
+    .hero-copy strong{color:var(--white);font-weight:560}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid #3d3d41;border-radius:999px;padding:13px 20px;font-size:.9rem;transition:.2s}
+    .btn:hover,.btn:focus-visible{border-color:var(--accent);background:#211012}
+    .btn.primary{background:var(--text);color:#090909;border-color:var(--text)}
+    .btn.primary:hover,.btn.primary:focus-visible{background:var(--accent);border-color:var(--accent);color:white}
+    .hero-card{position:relative;min-height:540px;border:1px solid #212124;background:
+      linear-gradient(180deg,rgba(227,27,35,.04),transparent 38%),
+      radial-gradient(circle at 68% 26%,rgba(227,27,35,.2),transparent 0 6%,transparent 24%),
+      linear-gradient(145deg,#171719 0 40%,#0b0b0c 40% 100%);
+      border-radius:44px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:34px}
+    .hero-card::before{content:"";position:absolute;width:190%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);transform:rotate(-18deg);opacity:.55}
+    .hero-card-inner{text-align:center;position:relative;z-index:1}
+    .m-mark{font-size:clamp(8rem,18vw,13rem);line-height:.78;font-weight:800;letter-spacing:-.11em;color:#0a0a0b;-webkit-text-stroke:1px #3d3d40;text-shadow:0 0 38px rgba(227,27,35,.18)}
+    .pulse{width:62%;height:1px;margin:32px auto 24px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 12px rgba(227,27,35,.8)}
+    .tag{font-size:clamp(1rem,2vw,1.3rem);letter-spacing:.44em;color:#ededed;margin-left:.44em}
+    section{padding:110px 0;border-top:1px solid #171719}
+    .section-head{display:grid;grid-template-columns:.58fr 1.42fr;gap:36px;align-items:start;margin-bottom:54px}
+    .eyebrow{color:var(--accent);font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;padding-top:8px}
+    h2{font-size:clamp(2.3rem,5.5vw,4.8rem);line-height:1.02;letter-spacing:-.055em;font-weight:560;margin:0}
+    .lead{font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.6;color:var(--muted);max-width:820px;margin:26px 0 0}
+    .manifesto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .manifesto article{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:32px;min-height:260px}
+    .manifesto .num{color:var(--accent);font-size:.74rem;letter-spacing:.16em}
+    .manifesto h3{font-size:1.8rem;letter-spacing:-.04em;margin:54px 0 16px;font-weight:560}
+    .manifesto p{margin:0;color:var(--muted);line-height:1.62}
+    .quote{margin:72px 0 0;padding:42px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:clamp(1.65rem,3vw,2.7rem);line-height:1.28;letter-spacing:-.035em;max-width:980px}
+    .quote em{font-style:normal;color:var(--accent)}
+    .worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .world{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:28px;min-height:245px;display:flex;flex-direction:column;justify-content:space-between}
+    .emoji{font-size:1.65rem;letter-spacing:.08em}
+    .world h3{font-size:1.35rem;margin:30px 0 8px;font-weight:560;letter-spacing:-.025em}
+    .world p{margin:0;color:var(--muted);line-height:1.55;font-size:.96rem}
+    .creative-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .creative-card{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:34px;min-height:330px;position:relative;overflow:hidden}
+    .creative-card::after{content:"";position:absolute;right:-42px;bottom:-60px;width:190px;height:190px;border:1px solid #2e2e32;border-radius:50%}
+    .creative-card.red::after{border-color:#6d1d22;box-shadow:0 0 60px rgba(227,27,35,.08)}
+    .creative-card .label{font-size:.72rem;color:var(--accent);letter-spacing:.18em;text-transform:uppercase}
+    .creative-card h3{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.08;letter-spacing:-.04em;margin:90px 0 14px;font-weight:560;max-width:500px}
+    .creative-card p{color:var(--muted);line-height:1.58;max-width:540px;margin:0}
+    .music-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .chip{border:1px solid #303034;border-radius:999px;padding:9px 13px;color:#d2d2d3;font-size:.84rem}
+    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center}
+    .portrait-abstract{min-height:500px;border-radius:34px;border:1px solid #242427;background:
+      radial-gradient(circle at 32% 32%,rgba(227,27,35,.28),transparent 0 4%,transparent 22%),
+      linear-gradient(155deg,#f2f2ef 0 30%,#d7d7d5 30% 31%,#0b0b0c 31% 100%);
+      position:relative;overflow:hidden}
+    .portrait-abstract::before{content:"M";position:absolute;left:10%;bottom:-6%;font-size:22rem;font-weight:800;letter-spacing:-.12em;color:#0a0a0b;-webkit-text-stroke:1px #343438;opacity:.95}
+    .about-copy h3{font-size:clamp(2.2rem,4.5vw,4rem);line-height:1.03;letter-spacing:-.05em;margin:12px 0 24px;font-weight:560}
+    .about-copy p{font-size:1.1rem;line-height:1.72;color:var(--muted);margin:0 0 18px}
+    .about-copy strong{color:var(--text);font-weight:540}
+    .closing{padding:110px 0 120px;text-align:center}
+    .closing h2{max-width:850px;margin:auto}
+    .closing p{color:var(--muted);font-size:1.1rem;line-height:1.65;max-width:650px;margin:28px auto 0}
+    .closing .hero-actions{justify-content:center}
+    footer{border-top:1px solid #171719;padding:30px 0 42px;color:#74747a;font-size:.83rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-abstract{min-height:380px}.creative-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .wrap{padding:0 15px}.nav-links{display:none}.hero{padding-top:22px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="MINDS4MOTION home"><b>MINDS<span class="four">4</span>MOTION</b></a>
+      <div class="nav-links">
+        <a href="#idea">Idea</a><a href="#worlds">Worlds</a><a href="#creative">Creative</a><a href="#about">Behind it</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <span class="kicker">#justcreative</span>
+          <h1 id="hero-title">MINDS<span class="four">4</span><br>MOTION</h1>
+          <p class="hero-copy"><strong>Think. Feel. Create.</strong><br>A creative space for what moves us — thoughts, images, music, moments and the space in between.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#idea">Enter the idea <span aria-hidden="true">↓</span></a>
+            <a class="btn" href="https://www.instagram.com/minds4motion/" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="MINDS4MOTION visual mark">
+          <div class="hero-card-inner"><div class="m-mark">M</div><div class="pulse"></div><div class="tag">#justcreative</div></div>
+        </div>
+      </section>
+
+      <section id="idea" aria-labelledby="idea-title">
+        <div class="section-head">
+          <div class="eyebrow">Why it exists</div>
+          <div><h2 id="idea-title">Not everything needs an answer. Some things need a form.</h2><p class="lead">MINDS4MOTION began with thoughts that were difficult to put into words, feelings that did not need to be solved and moments that stayed longer than expected. Creating became a way to make the invisible visible.</p></div>
+        </div>
+        <div class="manifesto">
+          <article><span class="num">01 / THINK</span><h3>Notice.</h3><p>Stay curious. Question what seems obvious. Give an unfinished thought enough space to become something more.</p></article>
+          <article><span class="num">02 / FEEL</span><h3>Allow.</h3><p>Not every feeling is a problem to solve. Sometimes the important move is simply to stay with it long enough to notice it.</p></article>
+          <article><span class="num">03 / CREATE</span><h3>Make visible.</h3><p>Words, images, music, motion. Creativity does not require permission — and it does not require the title of artist.</p></article>
+        </div>
+        <p class="quote">“Maybe <em>#justcreative</em> is simply permission to create, feel and think without always needing a conclusion.”</p>
+      </section>
+
+      <section id="worlds" aria-labelledby="worlds-title">
+        <div class="section-head">
+          <div class="eyebrow">Four worlds</div>
+          <div><h2 id="worlds-title">Fight. Family. Love. Joy.</h2><p class="lead">Different energies. One person. The contrasts are not noise — they are part of the picture.</p></div>
+        </div>
+        <div class="worlds">
+          <article class="world"><div class="emoji" aria-hidden="true">🥷 🔥 🇯🇵</div><div><h3>Fight</h3><p>Drive, discipline and the willingness to move through resistance.</p></div></article>
+          <article class="world"><div class="emoji" aria-hidden="true">❣️ 🐅 ⚽️</div><div><h3>Family</h3><p>Presence, shared moments and the things that matter more than productivity.</p></div></article>
+          <article class="world"><div class="emoji" aria-hidden="true">❤️ 🇮🇹 🏝️</div><div><h3>Love</h3><p>Warmth, Italy, sea, closeness — and the courage to feel deeply.</p></div></article>
+          <article class="world"><div class="emoji" aria-hidden="true">☀️ 🇸🇪 🏔️</div><div><h3>Joy</h3><p>Lagom. Mountains. Light. Not too little, not too much. Just right.</p></div></article>
+        </div>
+      </section>
+
+      <section id="creative" aria-labelledby="creative-title">
+        <div class="section-head">
+          <div class="eyebrow">Creative language</div>
+          <div><h2 id="creative-title">A picture can think. A track can remember. A line can move.</h2><p class="lead">The work is intentionally mixed: visual reductions, raw color, personal fragments, reinterpretations, music and small series that connect emotion with motion.</p></div>
+        </div>
+        <div class="creative-grid">
+          <article class="creative-card red"><span class="label">Visual</span><h3>Black. White. Red. And sometimes everything else.</h3><p>The core identity stays reduced and intentional. Color appears when it carries meaning — never just decoration.</p></article>
+          <article class="creative-card"><span class="label">Music</span><h3>Emotion needs a pulse.</h3><p>Electronic, melodic, cinematic, sometimes warm and light. Music is not background here; it changes how an image is felt.</p><div class="music-line"><span class="chip">EMBRZ</span><span class="chip">Luca Vasta</span><span class="chip">TWO LANES</span><span class="chip">RÜFÜS DU SOL</span></div></article>
+          <article class="creative-card"><span class="label">Series</span><h3>Creativity before explanation.</h3><p>Some work begins without a plan. A line leads to another line. A child paints. A moment becomes a sequence. Meaning can arrive later.</p></article>
+          <article class="creative-card red"><span class="label">Reduction</span><h3>Less noise. More notice.</h3><p>MINDS4MOTION is interested in what remains when distraction, overstatement and artificial polish are removed.</p></article>
+        </div>
+      </section>
+
+      <section id="about" aria-labelledby="about-title">
+        <div class="about">
+          <div class="portrait-abstract" aria-hidden="true"></div>
+          <div class="about-copy"><span class="eyebrow">Behind MINDS4MOTION</span><h3 id="about-title">The face. The head. The human behind it.</h3><p>I’m Michael. <strong>Not an artist by profession — and that is part of the point.</strong></p><p>I think a lot, feel deeply, create things and stay curious about what happens when those three meet. MINDS4MOTION is not about having figured everything out. It is a place to make something visible while it is still becoming.</p><p><strong>1 + 1 ≥ 2.</strong> A technical expression, a personal conviction: what we connect can become more than what existed separately.</p></div>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <span class="kicker">#justcreative</span>
+        <h2 id="closing-title">Still thinking.<br>Still feeling.<br>Still creating.</h2>
+        <p>No endless feed to explain. No promise to post every day. Just things worth making visible when they are ready.</p>
+        <div class="hero-actions"><a class="btn primary" href="https://www.instagram.com/minds4motion/" target="_blank" rel="noopener">Follow on Instagram <span aria-hidden="true">↗</span></a><button class="btn" id="contact-email" type="button">Get in touch <span aria-hidden="true">↗</span></button></div>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> MINDS4MOTION</span><span>#justcreative · No tracking · No cookies</span></div></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('contact-email').addEventListener('click', function () {
+      const mailbox = ['m','d'].join('');
+      const domain = ['minds','4','motion'].join('');
+      const address = mailbox + '@' + domain + '.' + ['c','o','m'].join('');
+      window.location.href = 'mailto:' + address + '?subject=' + encodeURIComponent('MINDS4MOTION');
+    });
+  </script>
+</body>
+</html>
