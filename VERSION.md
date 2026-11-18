@@ -1,8 +1,20 @@
-# MINDS4MOTION Website — v1.3.4
+# MINDS4MOTION Website — v1.3.5
 
 **Release:** 18 November 2026  
-**Status:** interaction-layer architecture refinement — pending merge and GitHub Pages publish  
+**Status:** visual alignment patch — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.5 — Hero alignment refinement
+
+Small visual polish based on mobile review.
+
+### Changed
+
+- Shifted the red **4** in the large hero wordmark slightly to the right.
+- This visually aligns the **4** more cleanly with the **M** in the line below.
+- No other layout, interaction or content changes.
+
+---
 
 ## v1.3.4 — MOTION / STATE separated interaction layers
 
