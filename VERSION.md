@@ -1,8 +1,26 @@
-# MINDS4MOTION Website — v1.3.1
+# MINDS4MOTION Website — v1.3.2
 
 **Release:** 18 November 2026  
-**Status:** interaction refinement — pending merge and GitHub Pages publish  
+**Status:** motion/touch refinement — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.2 — MOTION / STATE ambient interaction
+
+Second interaction refinement based on direct iPhone testing.
+
+### Changed
+
+- Reduced autonomous particle movement to a near-static ambient drift.
+- Lowered initial particle velocity dramatically.
+- Added stronger damping and a much lower velocity cap.
+- Increased touch influence so dragged movement shapes the field more clearly than autonomous motion.
+- Increased the interaction radius around the finger.
+- Moved touch handling to the complete MOTION / STATE shell.
+- Added `touch-action: none` and `overscroll-behavior: contain` to prevent page scrolling while interacting inside the field.
+- Added explicit non-passive `touchstart` / `touchmove` handlers with `preventDefault()` for iPhone Safari.
+- Updated the hint to: **Drag to shape it · scroll outside**.
+
+---
 
 ## v1.3.1 — MOTION / STATE interaction refinement
 
