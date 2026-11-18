@@ -59,6 +59,32 @@
     .hero-card::before{content:"";position:absolute;width:190%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);transform:rotate(-18deg);opacity:.55}
     .hero-card-inner{text-align:center;position:relative;z-index:1;width:100%;display:flex;align-items:center;justify-content:center}
     .hero-logo{display:block;width:min(100%,640px);height:auto;aspect-ratio:1/1;object-fit:contain;border-radius:24px}
+
+    .motion-state{position:relative;overflow:hidden}
+    .motion-shell{position:relative;min-height:620px;border:1px solid #222225;border-radius:36px;background:
+      radial-gradient(circle at 50% 58%,rgba(227,27,35,.08),transparent 0 9%,transparent 36%),
+      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate}
+    .motion-shell::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.018) 42% 43%,transparent 43% 100%);pointer-events:none;z-index:1}
+    .motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:0}
+    .motion-ui{position:relative;z-index:2;min-height:620px;padding:42px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+    .motion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+    .motion-index{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+    .motion-hint{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#77777d;text-align:right}
+    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:auto}
+    .motion-question{font-size:clamp(2.6rem,6vw,5.7rem);line-height:.98;letter-spacing:-.06em;font-weight:560;margin:0 0 34px}
+    .motion-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease}
+    .motion-choice:hover,.motion-choice:focus-visible{border-color:#77777d;color:#fff;outline:none;transform:translateY(-1px)}
+    .motion-choice.is-active{border-color:var(--accent);background:#211012;color:#fff}
+    .motion-phrase{min-height:4.2em;margin:34px auto 0;max-width:660px;color:#ededed;font-size:clamp(1.25rem,2.4vw,2rem);line-height:1.35;letter-spacing:-.025em;transition:opacity .18s ease,transform .18s ease}
+    .motion-phrase.is-changing{opacity:0;transform:translateY(5px)}
+    .motion-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+    .motion-signature{font-size:.75rem;letter-spacing:.28em;text-transform:uppercase;color:#8c8c91}
+    .motion-signature b{color:var(--accent);font-weight:700}
+    .motion-coordinate{font-variant-numeric:tabular-nums;font-size:.72rem;color:#626267;letter-spacing:.08em}
+    @media(max-width:620px){
+      .motion-shell,.motion-ui{min-height:560px}.motion-shell{border-radius:26px}.motion-ui{padding:24px 20px}.motion-top{gap:12px}.motion-hint{max-width:150px}.motion-center{padding:30px 0}.motion-choices{gap:8px}.motion-choice{padding:11px 14px;font-size:.68rem}.motion-bottom{align-items:center}.motion-coordinate{display:none}
+    }
     section{padding:110px 0;border-top:1px solid #171719}
     .section-head{display:grid;grid-template-columns:.58fr 1.42fr;gap:36px;align-items:start;margin-bottom:54px}
     .eyebrow{color:var(--accent);font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;padding-top:8px}
@@ -119,7 +145,7 @@
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="MINDS4MOTION home"><b>MINDS<span class="four">4</span>MOTION</b></a>
       <div class="nav-links">
-        <a href="#idea">Idea</a><a href="#worlds">Worlds</a><a href="#creative">Creative</a><a href="#about">Behind it</a>
+        <a href="#idea">Idea</a><a href="#motion">Motion</a><a href="#worlds">Worlds</a><a href="#creative">Creative</a><a href="#about">Behind it</a>
       </div>
     </nav>
   </header>
@@ -152,6 +178,35 @@
           <article><span class="num">03 / CREATE</span><h3>Make visible.</h3><p>Words, images, music, motion. Creativity does not require permission — and it does not require the title of artist.</p></article>
         </div>
         <p class="quote reveal">“Maybe <em>#justcreative</em> is simply permission to create, feel and think without always needing a conclusion.”</p>
+      </section>
+
+      <section id="motion" class="motion-state" aria-labelledby="motion-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">MOTION / STATE</div>
+          <div><h2 id="motion-title">What moves you right now?</h2><p class="lead">Choose a state. Then move through it. Thought, feeling and creation become motion — different every time, never needing a final answer.</p></div>
+        </div>
+        <div class="motion-shell reveal" id="motion-shell">
+          <canvas class="motion-canvas" id="motion-canvas" aria-hidden="true"></canvas>
+          <div class="motion-ui">
+            <div class="motion-top">
+              <span class="motion-index">Interactive fragment / 01</span>
+              <span class="motion-hint">Touch or move to shape it</span>
+            </div>
+            <div class="motion-center">
+              <p class="motion-question">Think. Feel. Create.</p>
+              <div class="motion-choices" role="group" aria-label="Choose a creative state">
+                <button class="motion-choice is-active" type="button" data-motion-state="think" aria-pressed="true">THINK</button>
+                <button class="motion-choice" type="button" data-motion-state="feel" aria-pressed="false">FEEL</button>
+                <button class="motion-choice" type="button" data-motion-state="create" aria-pressed="false">CREATE</button>
+              </div>
+              <p class="motion-phrase" id="motion-phrase" aria-live="polite">Not every thought needs a conclusion.</p>
+            </div>
+            <div class="motion-bottom">
+              <span class="motion-signature">MINDS <b>→</b> MOTION</span>
+              <span class="motion-coordinate" id="motion-coordinate">x 050 · y 050</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="worlds" aria-labelledby="worlds-title">
@@ -325,6 +380,204 @@
       }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
 
       sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    const motionShell = document.getElementById('motion-shell');
+    const motionCanvas = document.getElementById('motion-canvas');
+    const motionPhrase = document.getElementById('motion-phrase');
+    const motionCoordinate = document.getElementById('motion-coordinate');
+    const motionButtons = [...document.querySelectorAll('.motion-choice')];
+
+    if (motionShell && motionCanvas && motionPhrase) {
+      const ctx = motionCanvas.getContext('2d', { alpha: true });
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const pointer = { x: .5, y: .5, active: false };
+      let motionState = 'think';
+      let motionVisible = true;
+      let width = 0;
+      let height = 0;
+      let lastTime = performance.now();
+
+      const motionStates = {
+        think: {
+          phrases: [
+            'Not every thought needs a conclusion.',
+            'Questions can be places too.',
+            '1 + 1 ≥ 2.',
+            'Stay curious long enough for the obvious to change.',
+            'A thought can move before it becomes an answer.'
+          ],
+          speed: .34, drift: .22, pull: .045, red: .16
+        },
+        feel: {
+          phrases: [
+            'Some things do not need to be understood. Only felt.',
+            'Stay with it long enough to really notice it.',
+            'Not everything needs an answer.',
+            'Home is a feeling.',
+            'Let the feeling exist before you name it.'
+          ],
+          speed: .18, drift: .42, pull: .025, red: .28
+        },
+        create: {
+          phrases: [
+            'Make the invisible visible.',
+            'Create without needing to be an artist.',
+            '#justcreative.',
+            'Follow the line and see where it goes.',
+            'Permission is sometimes the first creative act.'
+          ],
+          speed: .56, drift: .7, pull: .065, red: .52
+        }
+      };
+
+      const particles = Array.from({ length: 48 }, (_, i) => ({
+        x: Math.random(), y: Math.random(),
+        vx: (Math.random() - .5) * .001,
+        vy: (Math.random() - .5) * .001,
+        seed: Math.random() * Math.PI * 2,
+        size: i % 9 === 0 ? 1.8 : 1
+      }));
+
+      function resizeMotionCanvas() {
+        const rect = motionShell.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        motionCanvas.width = Math.round(width * dpr);
+        motionCanvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function setMotionState(next) {
+        if (!motionStates[next]) return;
+        motionState = next;
+        motionButtons.forEach(button => {
+          const active = button.dataset.motionState === next;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        const list = motionStates[next].phrases;
+        let phrase = list[Math.floor(Math.random() * list.length)];
+        if (phrase === motionPhrase.textContent.trim() && list.length > 1) phrase = list[(list.indexOf(phrase) + 1) % list.length];
+        motionPhrase.classList.add('is-changing');
+        window.setTimeout(() => {
+          motionPhrase.textContent = phrase;
+          motionPhrase.classList.remove('is-changing');
+        }, 150);
+      }
+
+      motionButtons.forEach(button => button.addEventListener('click', () => setMotionState(button.dataset.motionState)));
+
+      function updatePointer(event) {
+        const rect = motionShell.getBoundingClientRect();
+        pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+        pointer.y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+        pointer.active = true;
+        if (motionCoordinate) {
+          motionCoordinate.textContent = 'x ' + String(Math.round(pointer.x * 100)).padStart(3,'0') + ' · y ' + String(Math.round(pointer.y * 100)).padStart(3,'0');
+        }
+      }
+
+      motionShell.addEventListener('pointermove', updatePointer, { passive: true });
+      motionShell.addEventListener('pointerdown', updatePointer, { passive: true });
+      motionShell.addEventListener('pointerleave', () => { pointer.active = false; });
+
+      function renderMotion(now) {
+        const dt = Math.min(32, now - lastTime || 16);
+        lastTime = now;
+
+        if (motionVisible && width && height) {
+          ctx.clearRect(0, 0, width, height);
+          const config = motionStates[motionState];
+          const t = now * .001;
+
+          particles.forEach((p, index) => {
+            const wobbleX = Math.sin(t * config.speed + p.seed) * .000018 * config.drift * dt;
+            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .000018 * config.drift * dt;
+            p.vx += wobbleX;
+            p.vy += wobbleY;
+
+            if (pointer.active) {
+              const dx = pointer.x - p.x;
+              const dy = pointer.y - p.y;
+              const dist = Math.max(.035, Math.hypot(dx,dy));
+              const influence = Math.max(0, 1 - dist / .45) * config.pull * .00008 * dt;
+              p.vx += dx / dist * influence;
+              p.vy += dy / dist * influence;
+            }
+
+            p.vx *= .992;
+            p.vy *= .992;
+            p.x += p.vx * dt + Math.sin(t * .3 + p.seed) * .00001 * dt;
+            p.y += p.vy * dt + Math.cos(t * .27 + p.seed) * .00001 * dt;
+
+            if (p.x < -.04) p.x = 1.04;
+            if (p.x > 1.04) p.x = -.04;
+            if (p.y < -.04) p.y = 1.04;
+            if (p.y > 1.04) p.y = -.04;
+
+            const x = p.x * width;
+            const y = p.y * height;
+            const isRed = (index % Math.max(2, Math.round(1 / config.red))) === 0;
+            ctx.beginPath();
+            ctx.arc(x, y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = isRed ? 'rgba(227,27,35,.78)' : 'rgba(247,247,245,.46)';
+            ctx.fill();
+          });
+
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const a = particles[i], b = particles[j];
+              const dx = (a.x - b.x) * width;
+              const dy = (a.y - b.y) * height;
+              const dist = Math.hypot(dx,dy);
+              const maxDist = motionState === 'create' ? 128 : motionState === 'feel' ? 150 : 116;
+              if (dist < maxDist) {
+                const alpha = (1 - dist / maxDist) * (motionState === 'feel' ? .13 : .18);
+                ctx.beginPath();
+                ctx.moveTo(a.x * width, a.y * height);
+                ctx.lineTo(b.x * width, b.y * height);
+                ctx.strokeStyle = 'rgba(247,247,245,' + alpha.toFixed(3) + ')';
+                ctx.lineWidth = .7;
+                ctx.stroke();
+              }
+            }
+          }
+
+          if (pointer.active) {
+            const px = pointer.x * width, py = pointer.y * height;
+            const glow = ctx.createRadialGradient(px,py,0,px,py,90);
+            glow.addColorStop(0,'rgba(227,27,35,.12)');
+            glow.addColorStop(1,'rgba(227,27,35,0)');
+            ctx.fillStyle = glow;
+            ctx.fillRect(px-90,py-90,180,180);
+          }
+        }
+
+        if (!reducedMotion) requestAnimationFrame(renderMotion);
+      }
+
+      resizeMotionCanvas();
+      window.addEventListener('resize', resizeMotionCanvas);
+
+      if ('IntersectionObserver' in window) {
+        const motionObserver = new IntersectionObserver(entries => {
+          motionVisible = entries.some(entry => entry.isIntersecting);
+        }, { threshold: .05 });
+        motionObserver.observe(motionShell);
+      }
+
+      if (reducedMotion) {
+        setMotionState('think');
+        particles.slice(0,18).forEach((p,index) => {
+          const x=p.x*width,y=p.y*height;
+          ctx.beginPath();ctx.arc(x,y,index%6===0?2:1,0,Math.PI*2);
+          ctx.fillStyle=index%5===0?'rgba(227,27,35,.7)':'rgba(247,247,245,.42)';
+          ctx.fill();
+        });
+      } else {
+        requestAnimationFrame(renderMotion);
+      }
     }
 
     updateScrollUI();
