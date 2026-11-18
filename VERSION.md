@@ -1,8 +1,24 @@
-# MINDS4MOTION Website — v1.3.2
+# MINDS4MOTION Website — v1.3.3
 
 **Release:** 18 November 2026  
-**Status:** motion/touch refinement — pending merge and GitHub Pages publish  
+**Status:** ambient-motion and control refinement — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.3 — MOTION / STATE ambient drift + tappable controls
+
+Refines the balance between autonomous motion, touch interaction and control usability.
+
+### Changed
+
+- Added a persistent ultra-slow base drift so the field remains visibly alive even without touch.
+- Kept the interaction velocity separate from ambient movement so touch still has clear visual weight.
+- THINK / FEEL / CREATE now have slightly different ambient drift scales while staying calm.
+- Excluded the state buttons from the global touch interception.
+- Added `touch-action: manipulation` to the controls so buttons are tappable on iPhone.
+- Gravity and drag interaction remain active everywhere else in the MOTION / STATE field.
+- Page scrolling remains blocked while dragging in the interactive field, but controls are usable again.
+
+---
 
 ## v1.3.2 — MOTION / STATE ambient interaction
 
