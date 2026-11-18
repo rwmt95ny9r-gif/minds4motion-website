@@ -70,10 +70,10 @@
     .motion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
     .motion-index{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
     .motion-hint{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#77777d;text-align:right}
-    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:auto}
+    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:auto;touch-action:manipulation}
     .motion-question{font-size:clamp(2.6rem,6vw,5.7rem);line-height:.98;letter-spacing:-.06em;font-weight:560;margin:0 0 34px}
     .motion-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease}
+    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease;touch-action:manipulation}
     .motion-choice:hover,.motion-choice:focus-visible{border-color:#77777d;color:#fff;outline:none;transform:translateY(-1px)}
     .motion-choice.is-active{border-color:var(--accent);background:#211012;color:#fff}
     .motion-phrase{min-height:4.2em;margin:34px auto 0;max-width:660px;color:#ededed;font-size:clamp(1.25rem,2.4vw,2rem);line-height:1.35;letter-spacing:-.025em;transition:opacity .18s ease,transform .18s ease}
@@ -431,13 +431,18 @@
         }
       };
 
-      const particles = Array.from({ length: 42 }, (_, i) => ({
-        x: Math.random(), y: Math.random(),
-        vx: (Math.random() - .5) * .000025,
-        vy: (Math.random() - .5) * .000025,
-        seed: Math.random() * Math.PI * 2,
-        size: i % 9 === 0 ? 1.7 : 1
-      }));
+      const particles = Array.from({ length: 42 }, (_, i) => {
+        const angle = Math.random() * Math.PI * 2;
+        const ambient = .000012 + Math.random() * .000018;
+        return {
+          x: Math.random(), y: Math.random(),
+          vx: 0, vy: 0,
+          baseVx: Math.cos(angle) * ambient,
+          baseVy: Math.sin(angle) * ambient,
+          seed: Math.random() * Math.PI * 2,
+          size: i % 9 === 0 ? 1.7 : 1
+        };
+      });
 
       function resizeMotionCanvas() {
         const rect = motionShell.getBoundingClientRect();
@@ -480,7 +485,12 @@
         }
       }
 
+      function isMotionControlTarget(target) {
+        return target instanceof Element && !!target.closest('.motion-choice');
+      }
+
       function updatePointer(event) {
+        if (isMotionControlTarget(event.target)) return;
         setPointerFromClient(event.clientX, event.clientY, event.type === 'pointerdown');
       }
 
@@ -491,6 +501,7 @@
       motionShell.addEventListener('pointerleave', () => { pointer.active = false; });
 
       motionShell.addEventListener('touchstart', event => {
+        if (isMotionControlTarget(event.target)) return;
         const touch = event.touches && event.touches[0];
         if (touch) {
           event.preventDefault();
@@ -499,6 +510,7 @@
       }, { passive: false });
 
       motionShell.addEventListener('touchmove', event => {
+        if (isMotionControlTarget(event.target)) return;
         const touch = event.touches && event.touches[0];
         if (touch) {
           event.preventDefault();
@@ -543,18 +555,19 @@
               }
             }
 
-            p.vx *= Math.pow(.91, frame);
-            p.vy *= Math.pow(.91, frame);
+            p.vx *= Math.pow(.93, frame);
+            p.vy *= Math.pow(.93, frame);
 
-            const maxVelocity = .00032;
+            const maxVelocity = .00042;
             const velocity = Math.hypot(p.vx,p.vy);
             if (velocity > maxVelocity) {
               p.vx = p.vx / velocity * maxVelocity;
               p.vy = p.vy / velocity * maxVelocity;
             }
 
-            p.x += p.vx * frame + Math.sin(t * .10 + p.seed) * .0000008 * frame;
-            p.y += p.vy * frame + Math.cos(t * .09 + p.seed) * .0000008 * frame;
+            const ambientScale = motionState === 'create' ? 1.16 : motionState === 'feel' ? .84 : 1;
+            p.x += (p.baseVx * ambientScale + p.vx) * frame + Math.sin(t * .10 + p.seed) * .0000014 * frame;
+            p.y += (p.baseVy * ambientScale + p.vy) * frame + Math.cos(t * .09 + p.seed) * .0000014 * frame;
 
             if (p.x < -.04) p.x = 1.04;
             if (p.x > 1.04) p.x = -.04;
