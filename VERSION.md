@@ -1,8 +1,24 @@
-# MINDS4MOTION Website — v1.3.3
+# MINDS4MOTION Website — v1.3.4
 
 **Release:** 18 November 2026  
-**Status:** ambient-motion and control refinement — pending merge and GitHub Pages publish  
+**Status:** interaction-layer architecture refinement — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.4 — MOTION / STATE separated interaction layers
+
+Replaces the previous global touch interception with a cleaner interaction architecture.
+
+### Changed
+
+- Removed touch/scroll locking from the full MOTION / STATE shell.
+- The **canvas alone** now owns drag gestures and `touch-action: none`.
+- THINK / FEEL / CREATE remain normal DOM buttons above the canvas and are no longer part of the drag-lock layer.
+- The center text is pointer-transparent except for the state buttons, so the canvas remains draggable across almost the complete visual field.
+- Added Pointer Events + `setPointerCapture()` on the canvas for stable iPhone dragging without page scroll.
+- Added a pointer-up activation path for state buttons in addition to click as an iOS reliability fallback.
+- Kept the v1.3.3 ambient drift and gravity behavior unchanged.
+
+---
 
 ## v1.3.3 — MOTION / STATE ambient drift + tappable controls
 

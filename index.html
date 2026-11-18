@@ -63,17 +63,17 @@
     .motion-state{position:relative;overflow:hidden}
     .motion-shell{position:relative;min-height:620px;border:1px solid #222225;border-radius:36px;background:
       radial-gradient(circle at 50% 58%,rgba(227,27,35,.08),transparent 0 9%,transparent 36%),
-      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate;-webkit-user-select:none;user-select:none}
     .motion-shell::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.018) 42% 43%,transparent 43% 100%);pointer-events:none;z-index:1}
-    .motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:0}
+    .motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;overscroll-behavior:contain;z-index:0;cursor:crosshair}
     .motion-ui{position:relative;z-index:2;min-height:620px;padding:42px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
     .motion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
     .motion-index{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
     .motion-hint{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#77777d;text-align:right}
-    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:auto;touch-action:manipulation}
+    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:none}
     .motion-question{font-size:clamp(2.6rem,6vw,5.7rem);line-height:.98;letter-spacing:-.06em;font-weight:560;margin:0 0 34px}
-    .motion-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease;touch-action:manipulation}
+    .motion-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;pointer-events:auto}
+    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease;touch-action:manipulation;position:relative;z-index:3}
     .motion-choice:hover,.motion-choice:focus-visible{border-color:#77777d;color:#fff;outline:none;transform:translateY(-1px)}
     .motion-choice.is-active{border-color:var(--accent);background:#211012;color:#fff}
     .motion-phrase{min-height:4.2em;margin:34px auto 0;max-width:660px;color:#ededed;font-size:clamp(1.25rem,2.4vw,2rem);line-height:1.35;letter-spacing:-.025em;transition:opacity .18s ease,transform .18s ease}
@@ -471,7 +471,24 @@
         }, 150);
       }
 
-      motionButtons.forEach(button => button.addEventListener('click', () => setMotionState(button.dataset.motionState)));
+      let lastMotionButtonActivation = 0;
+      function activateMotionButton(button) {
+        const now = performance.now();
+        if (now - lastMotionButtonActivation < 180) return;
+        lastMotionButtonActivation = now;
+        setMotionState(button.dataset.motionState);
+      }
+
+      motionButtons.forEach(button => {
+        button.addEventListener('pointerup', event => {
+          event.stopPropagation();
+          activateMotionButton(button);
+        });
+        button.addEventListener('click', event => {
+          event.stopPropagation();
+          activateMotionButton(button);
+        });
+      });
 
       function setPointerFromClient(clientX, clientY, pulse) {
         const rect = motionShell.getBoundingClientRect();
@@ -485,42 +502,45 @@
         }
       }
 
-      function isMotionControlTarget(target) {
-        return target instanceof Element && !!target.closest('.motion-choice');
+      function updateCanvasPointer(event, pulse) {
+        const rect = motionShell.getBoundingClientRect();
+        pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+        pointer.y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+        pointer.active = true;
+        pointer.strength = 1;
+        if (pulse) pointer.pulse = 1;
+        if (motionCoordinate) {
+          motionCoordinate.textContent = 'x ' + String(Math.round(pointer.x * 100)).padStart(3,'0') + ' · y ' + String(Math.round(pointer.y * 100)).padStart(3,'0');
+        }
       }
 
-      function updatePointer(event) {
-        if (isMotionControlTarget(event.target)) return;
-        setPointerFromClient(event.clientX, event.clientY, event.type === 'pointerdown');
-      }
-
-      motionShell.addEventListener('pointermove', updatePointer, { passive: true });
-      motionShell.addEventListener('pointerdown', updatePointer, { passive: true });
-      motionShell.addEventListener('pointerup', () => { pointer.active = false; }, { passive: true });
-      motionShell.addEventListener('pointercancel', () => { pointer.active = false; }, { passive: true });
-      motionShell.addEventListener('pointerleave', () => { pointer.active = false; });
-
-      motionShell.addEventListener('touchstart', event => {
-        if (isMotionControlTarget(event.target)) return;
-        const touch = event.touches && event.touches[0];
-        if (touch) {
-          event.preventDefault();
-          setPointerFromClient(touch.clientX, touch.clientY, true);
+      motionCanvas.addEventListener('pointerdown', event => {
+        event.preventDefault();
+        updateCanvasPointer(event, true);
+        if (motionCanvas.setPointerCapture) {
+          try { motionCanvas.setPointerCapture(event.pointerId); } catch (error) {}
         }
-      }, { passive: false });
+      });
 
-      motionShell.addEventListener('touchmove', event => {
-        if (isMotionControlTarget(event.target)) return;
-        const touch = event.touches && event.touches[0];
-        if (touch) {
-          event.preventDefault();
-          setPointerFromClient(touch.clientX, touch.clientY, false);
-        }
-      }, { passive: false });
+      motionCanvas.addEventListener('pointermove', event => {
+        if (!pointer.active && event.pointerType !== 'mouse') return;
+        event.preventDefault();
+        updateCanvasPointer(event, false);
+      });
 
-      motionShell.addEventListener('touchend', () => {
+      function releaseCanvasPointer(event) {
         pointer.active = false;
-      }, { passive: true });
+        if (event && motionCanvas.releasePointerCapture && motionCanvas.hasPointerCapture && motionCanvas.hasPointerCapture(event.pointerId)) {
+          try { motionCanvas.releasePointerCapture(event.pointerId); } catch (error) {}
+        }
+      }
+
+      motionCanvas.addEventListener('pointerup', releaseCanvasPointer);
+      motionCanvas.addEventListener('pointercancel', releaseCanvasPointer);
+      motionCanvas.addEventListener('lostpointercapture', () => { pointer.active = false; });
+      motionCanvas.addEventListener('pointerleave', event => {
+        if (event.pointerType === 'mouse' && !event.buttons) pointer.active = false;
+      });
 
       function renderMotion(now) {
         const dt = Math.min(32, now - lastTime || 16);
