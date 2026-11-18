@@ -62,7 +62,13 @@
     .quote em{font-style:normal;color:var(--accent)}
     .worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .world{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:28px;min-height:245px;display:flex;flex-direction:column;justify-content:space-between}
-    .emoji{font-size:1.65rem;letter-spacing:.08em}
+    .world-icons{display:flex;align-items:center;gap:16px;color:var(--white);min-height:48px}
+    .world-icons svg{width:38px;height:38px;display:block;flex:none}
+    .world-icons .icon-red{color:var(--accent)}
+    .world-icons .icon-white{color:var(--white)}
+    .world-icons .stroke{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .world-icons .fill{fill:currentColor}
+    .world-icons .dark{fill:#050505}
     .world h3{font-size:1.35rem;margin:30px 0 8px;font-weight:560;letter-spacing:-.025em}
     .world p{margin:0;color:var(--muted);line-height:1.55;font-size:.96rem}
     .creative-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -144,10 +150,38 @@
           <div><h2 id="worlds-title">Fight. Family. Love. Joy.</h2><p class="lead">Different energies. One person. The contrasts are not noise — they are part of the picture.</p></div>
         </div>
         <div class="worlds">
-          <article class="world"><div class="emoji" aria-hidden="true">🥷 🔥 🇯🇵</div><div><h3>Fight</h3><p>Drive, discipline and the willingness to move through resistance.</p></div></article>
-          <article class="world"><div class="emoji" aria-hidden="true">❣️ 🐅 ⚽️</div><div><h3>Family</h3><p>Presence, shared moments and the things that matter more than productivity.</p></div></article>
-          <article class="world"><div class="emoji" aria-hidden="true">❤️ 🇮🇹 🏝️</div><div><h3>Love</h3><p>Warmth, Italy, sea, closeness — and the courage to feel deeply.</p></div></article>
-          <article class="world"><div class="emoji" aria-hidden="true">☀️ 🇸🇪 🏔️</div><div><h3>Joy</h3><p>Lagom. Mountains. Light. Not too little, not too much. Just right.</p></div></article>
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-white" viewBox="0 0 48 48"><path class="fill" d="M9 18 16 9h16l7 9-4 18H13L9 18Z"/><path class="dark" d="M14 20h20l-3 6H17l-3-6Z"/><circle class="fill" cx="20" cy="23" r="1.4"/><circle class="fill" cx="28" cy="23" r="1.4"/></svg>
+              <svg class="icon-red" viewBox="0 0 48 48"><path class="fill" d="M27 4c2 8-5 10-2 17 3-2 5-5 5-8 7 5 11 12 10 20-1 7-7 11-16 11S8 39 8 31c0-7 5-12 11-17-1 6 1 9 4 11-1-8 5-12 4-21Z"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><circle class="stroke" cx="24" cy="24" r="15"/><circle class="icon-red fill" cx="24" cy="24" r="6"/></svg>
+            </div>
+            <div><h3>Fight</h3><p>Drive, discipline and the willingness to move through resistance.</p></div>
+          </article>
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48"><path class="fill" d="M24 41 8 26C0 18 5 7 15 7c5 0 8 3 9 6 2-3 5-6 10-6 10 0 15 11 6 19L24 41Z"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><path class="stroke" d="M10 12 20 36M20 10l8 28M31 11l7 24"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><circle class="stroke" cx="24" cy="24" r="16"/><path class="stroke" d="m24 13 6 4-2 7h-8l-2-7 6-4Zm-6 11-7 5m17-5 9 5m-19 0 2 9m8-9-2 9m-15-9 3-9m23 9-3-9"/></svg>
+            </div>
+            <div><h3>Family</h3><p>Presence, shared moments and the things that matter more than productivity.</p></div>
+          </article>
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48"><path class="fill" d="M24 41 8 26C0 18 5 7 15 7c5 0 8 3 9 6 2-3 5-6 10-6 10 0 15 11 6 19L24 41Z"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><rect class="fill" x="9" y="10" width="8" height="28" rx="1"/><rect class="icon-red fill" x="20" y="10" width="8" height="28" rx="1"/><rect class="fill" x="31" y="10" width="8" height="28" rx="1"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><path class="stroke" d="M6 31h36M10 35c5-4 9-4 14 0 5-4 9-4 14 0"/><path class="icon-red stroke" d="M24 10v13M24 10c-5 1-8 4-10 8 5-1 8 0 10 3m0-11c5 1 8 4 10 8-5-1-8 0-10 3"/></svg>
+            </div>
+            <div><h3>Love</h3><p>Warmth, Italy, sea, closeness — and the courage to feel deeply.</p></div>
+          </article>
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48"><circle class="stroke" cx="24" cy="24" r="8"/><path class="stroke" d="M24 5v6m0 26v6M5 24h6m26 0h6M10.5 10.5l4.5 4.5m18 18 4.5 4.5m0-27L33 15m-18 18-4.5 4.5"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><rect class="stroke" x="8" y="10" width="32" height="28" rx="2"/><path class="stroke" d="M8 24h32M22 10v28"/></svg>
+              <svg class="icon-white" viewBox="0 0 48 48"><path class="stroke" d="m6 37 11-17 6 8 7-14 12 23H6Z"/><path class="icon-red stroke" d="m27 20 3-6 4 7"/></svg>
+            </div>
+            <div><h3>Joy</h3><p>Lagom. Mountains. Light. Not too little, not too much. Just right.</p></div>
+          </article>
         </div>
       </section>
 
