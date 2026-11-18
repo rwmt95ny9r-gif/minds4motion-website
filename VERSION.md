@@ -40,3 +40,12 @@
 ## Boundaries
 
 The public site expresses the MINDS4MOTION creative identity. It deliberately excludes private Project Michael / M60 information that is not part of the public brand narrative, including personal family, legal, financial, health or employer-internal material.
+
+
+## Revision v1.1 — Visual identity refinement
+
+- Replaced the colorful emoji groups in **Four worlds** with a custom inline-SVG icon system in white, red and black.
+- Preserved the meanings of Fight, Family, Love and Joy while bringing all symbols into one consistent MINDS4MOTION visual language.
+- Replaced the abstract placeholder in **Behind MINDS4MOTION** with Michael's original supplied photograph.
+- The photograph is stored and displayed without filters, recoloring, retouching or reconstruction; the complete source image is shown rather than cropped.
+- Only the surrounding website treatment (border, radius and responsive placement) is applied.
