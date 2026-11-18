@@ -19,14 +19,27 @@
     *,*::before,*::after{box-sizing:border-box}
     html{scroll-behavior:smooth;background:var(--bg)}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    body::selection{background:var(--accent);color:#fff}
     a{color:inherit;text-decoration:none}
+    header{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.045)}
+    .scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:80;pointer-events:none}
+    .scroll-progress span{display:block;width:0;height:100%;background:var(--accent);box-shadow:0 0 12px rgba(227,27,35,.65);transform-origin:left center}
     button{font:inherit}
     .wrap{max-width:var(--max);margin:auto;padding:0 22px}
     .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
     .brand{font-size:1rem;letter-spacing:.22em;white-space:nowrap}
     .brand b{font-weight:500}.brand .four{color:var(--accent)}
     .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.9rem}
-    .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+    .nav-links a{position:relative;transition:color .2s ease}
+    .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .25s ease}
+    .nav-links a:hover,.nav-links a:focus-visible,.nav-links a.is-active{color:var(--text)}
+    .nav-links a:hover::after,.nav-links a:focus-visible::after,.nav-links a.is-active::after{right:0}
+    .back-to-top{position:fixed;right:max(18px,calc((100vw - var(--max))/2 + 18px));bottom:22px;width:52px;height:52px;border-radius:50%;border:1px solid #343438;background:rgba(16,16,18,.84);color:var(--text);display:grid;place-items:center;z-index:60;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.34);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;transform:translateY(14px) scale(.96);pointer-events:none;transition:opacity .22s ease,transform .22s ease,border-color .22s ease,background .22s ease}
+    .back-to-top.is-visible{opacity:1;transform:none;pointer-events:auto}
+    .back-to-top:hover,.back-to-top:focus-visible{border-color:var(--accent);background:#211012;outline:none}
+    .back-to-top svg{width:20px;height:20px}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.65,.3,1),transform .7s cubic-bezier(.2,.65,.3,1)}
+    .reveal.is-visible{opacity:1;transform:none}
     .hero{min-height:calc(100vh - 84px);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:52px;padding:42px 0 82px}
     .kicker{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
     h1{font-size:clamp(4rem,10vw,8.2rem);line-height:.88;letter-spacing:-.075em;margin:24px 0 26px;font-weight:570}
@@ -95,12 +108,13 @@
       .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-photo{max-width:620px;margin:0 auto}.creative-grid{grid-template-columns:1fr}
     }
     @media(max-width:620px){
-      .wrap{padding:0 15px}.nav-links{display:none}.hero{padding-top:22px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}
+      .wrap{padding:0 15px}.nav-links{display:none}.hero{padding-top:22px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}.back-to-top{right:15px;bottom:16px;width:48px;height:48px}
     }
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.back-to-top,.reveal,.nav-links a,.nav-links a::after{transition:none}.reveal{opacity:1;transform:none}}
   </style>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
   <header class="wrap">
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="MINDS4MOTION home"><b>MINDS<span class="four">4</span>MOTION</b></a>
@@ -128,24 +142,24 @@
       </section>
 
       <section id="idea" aria-labelledby="idea-title">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div class="eyebrow">Why it exists</div>
           <div><h2 id="idea-title">Not everything needs an answer. Some things need a form.</h2><p class="lead">MINDS4MOTION began with thoughts that were difficult to put into words, feelings that did not need to be solved and moments that stayed longer than expected. Creating became a way to make the invisible visible.</p></div>
         </div>
-        <div class="manifesto">
+        <div class="manifesto reveal">
           <article><span class="num">01 / THINK</span><h3>Notice.</h3><p>Stay curious. Question what seems obvious. Give an unfinished thought enough space to become something more.</p></article>
           <article><span class="num">02 / FEEL</span><h3>Allow.</h3><p>Not every feeling is a problem to solve. Sometimes the important move is simply to stay with it long enough to notice it.</p></article>
           <article><span class="num">03 / CREATE</span><h3>Make visible.</h3><p>Words, images, music, motion. Creativity does not require permission — and it does not require the title of artist.</p></article>
         </div>
-        <p class="quote">“Maybe <em>#justcreative</em> is simply permission to create, feel and think without always needing a conclusion.”</p>
+        <p class="quote reveal">“Maybe <em>#justcreative</em> is simply permission to create, feel and think without always needing a conclusion.”</p>
       </section>
 
       <section id="worlds" aria-labelledby="worlds-title">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div class="eyebrow">Four worlds</div>
           <div><h2 id="worlds-title">Fight. Family. Love. Joy.</h2><p class="lead">Different energies. One person. The contrasts are not noise — they are part of the picture.</p></div>
         </div>
-        <div class="worlds">
+        <div class="worlds reveal">
           <article class="world">
             <div class="world-icons" aria-hidden="true">
               <svg class="icon-red" viewBox="0 0 48 48">
@@ -223,11 +237,11 @@
       </section>
 
       <section id="creative" aria-labelledby="creative-title">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div class="eyebrow">Creative language</div>
           <div><h2 id="creative-title">A picture can think. A track can remember. A line can move.</h2><p class="lead">The work is intentionally mixed: visual reductions, raw color, personal fragments, reinterpretations, music and small series that connect emotion with motion.</p></div>
         </div>
-        <div class="creative-grid">
+        <div class="creative-grid reveal">
           <article class="creative-card red"><span class="label">Visual</span><h3>Black. White. Red. And sometimes everything else.</h3><p>The core identity stays reduced and intentional. Color appears when it carries meaning — never just decoration.</p></article>
           <article class="creative-card"><span class="label">Music</span><h3>Emotion needs a pulse.</h3><p>Electronic, melodic, cinematic, sometimes warm and light. Music is not background here; it changes how an image is felt.</p><div class="music-line"><span class="chip">EMBRZ</span><span class="chip">Luca Vasta</span><span class="chip">TWO LANES</span><span class="chip">RÜFÜS DU SOL</span></div></article>
           <article class="creative-card"><span class="label">Series</span><h3>Creativity before explanation.</h3><p>Some work begins without a plan. A line leads to another line. A child paints. A moment becomes a sequence. Meaning can arrive later.</p></article>
@@ -236,13 +250,13 @@
       </section>
 
       <section id="about" aria-labelledby="about-title">
-        <div class="about">
+        <div class="about reveal">
           <figure class="portrait-photo"><img src="data:image/jpeg;base64,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" alt="MINDS4MOTION portrait collage featuring Michael, the M mark and personal visual fragments" width="240" height="240" loading="lazy" decoding="async"></figure>
           <div class="about-copy"><span class="eyebrow">Behind MINDS4MOTION</span><h3 id="about-title">The face. The head. The human behind it.</h3><p>I’m Michael. <strong>Not an artist by profession — and that is part of the point.</strong></p><p>MINDS4MOTION started with thoughts I couldn’t quite put into words.<br>Feelings that didn’t need an answer.<br>Moments that stayed longer than expected.</p><p>So I started creating.</p><p>Not to explain everything.<br>But to give some of it a form. To make something visible while it is still becoming.</p><p>I think a lot, feel deeply, stay curious and create things when words are not quite enough. Somewhere along the way, <strong>#justcreative became more than a hashtag. It became permission.</strong></p><p>To create without needing to be an artist.<br>To feel without needing to justify it.<br>To think without always needing a conclusion.</p><p>And there is another idea that has stayed with me:</p><p><strong>1 + 1 ≥ 2.</strong></p><p>A technical expression, a personal conviction: what we connect can become more than what existed separately.</p><p>That is MINDS4MOTION.</p><p><strong>Still thinking.<br>Still feeling.<br>Still creating.</strong></p></div>
         </div>
       </section>
 
-      <section class="closing" aria-labelledby="closing-title">
+      <section class="closing reveal" aria-labelledby="closing-title">
         <span class="kicker">#justcreative</span>
         <h2 id="closing-title">Still thinking.<br>Still feeling.<br>Still creating.</h2>
         <p>No endless feed to explain. No promise to post every day. Just things worth making visible when they are ready.</p>
@@ -251,15 +265,71 @@
     </div>
   </main>
 
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 14 6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
   <footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> MINDS4MOTION</span><span>#justcreative · No tracking · No cookies</span></div></footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
     document.getElementById('contact-email').addEventListener('click', function () {
       const mailbox = ['m','d'].join('');
       const domain = ['minds','4','motion'].join('');
       const address = mailbox + '@' + domain + '.' + ['c','o','m'].join('');
       window.location.href = 'mailto:' + address + '?subject=' + encodeURIComponent('MINDS4MOTION');
     });
+
+    const progressBar = document.getElementById('scroll-progress-bar');
+    const topButton = document.getElementById('back-to-top');
+    const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+    const sections = navLinks
+      .map(link => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    function updateScrollUI() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(100, Math.max(0, scrollTop / scrollable * 100)) : 0;
+      progressBar.style.width = progress + '%';
+      topButton.classList.toggle('is-visible', scrollTop > 620);
+    }
+
+    topButton.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+
+    if ('IntersectionObserver' in window && sections.length) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id));
+        });
+      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+      sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    updateScrollUI();
+    window.addEventListener('scroll', updateScrollUI, { passive: true });
+    window.addEventListener('resize', updateScrollUI);
   </script>
 </body>
 </html>
