@@ -391,7 +391,7 @@
     if (motionShell && motionCanvas && motionPhrase) {
       const ctx = motionCanvas.getContext('2d', { alpha: true });
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const pointer = { x: .5, y: .5, active: false };
+      const pointer = { x: .5, y: .5, active: false, strength: 0, pulse: 0 };
       let motionState = 'think';
       let motionVisible = true;
       let width = 0;
@@ -407,7 +407,7 @@
             'Stay curious long enough for the obvious to change.',
             'A thought can move before it becomes an answer.'
           ],
-          speed: .34, drift: .22, pull: .045, red: .16
+          speed: .20, drift: .16, pull: .85, red: .16
         },
         feel: {
           phrases: [
@@ -417,7 +417,7 @@
             'Home is a feeling.',
             'Let the feeling exist before you name it.'
           ],
-          speed: .18, drift: .42, pull: .025, red: .28
+          speed: .12, drift: .24, pull: .65, red: .28
         },
         create: {
           phrases: [
@@ -427,16 +427,16 @@
             'Follow the line and see where it goes.',
             'Permission is sometimes the first creative act.'
           ],
-          speed: .56, drift: .7, pull: .065, red: .52
+          speed: .28, drift: .32, pull: 1.05, red: .52
         }
       };
 
-      const particles = Array.from({ length: 48 }, (_, i) => ({
+      const particles = Array.from({ length: 42 }, (_, i) => ({
         x: Math.random(), y: Math.random(),
-        vx: (Math.random() - .5) * .001,
-        vy: (Math.random() - .5) * .001,
+        vx: (Math.random() - .5) * .00016,
+        vy: (Math.random() - .5) * .00016,
         seed: Math.random() * Math.PI * 2,
-        size: i % 9 === 0 ? 1.8 : 1
+        size: i % 9 === 0 ? 1.7 : 1
       }));
 
       function resizeMotionCanvas() {
@@ -468,22 +468,45 @@
 
       motionButtons.forEach(button => button.addEventListener('click', () => setMotionState(button.dataset.motionState)));
 
-      function updatePointer(event) {
+      function setPointerFromClient(clientX, clientY, pulse) {
         const rect = motionShell.getBoundingClientRect();
-        pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-        pointer.y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+        pointer.x = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        pointer.y = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
         pointer.active = true;
+        pointer.strength = 1;
+        if (pulse) pointer.pulse = 1;
         if (motionCoordinate) {
           motionCoordinate.textContent = 'x ' + String(Math.round(pointer.x * 100)).padStart(3,'0') + ' · y ' + String(Math.round(pointer.y * 100)).padStart(3,'0');
         }
       }
 
+      function updatePointer(event) {
+        setPointerFromClient(event.clientX, event.clientY, event.type === 'pointerdown');
+      }
+
       motionShell.addEventListener('pointermove', updatePointer, { passive: true });
       motionShell.addEventListener('pointerdown', updatePointer, { passive: true });
+      motionShell.addEventListener('pointerup', () => { pointer.active = false; }, { passive: true });
+      motionShell.addEventListener('pointercancel', () => { pointer.active = false; }, { passive: true });
       motionShell.addEventListener('pointerleave', () => { pointer.active = false; });
+
+      motionShell.addEventListener('touchstart', event => {
+        const touch = event.touches && event.touches[0];
+        if (touch) setPointerFromClient(touch.clientX, touch.clientY, true);
+      }, { passive: true });
+
+      motionShell.addEventListener('touchmove', event => {
+        const touch = event.touches && event.touches[0];
+        if (touch) setPointerFromClient(touch.clientX, touch.clientY, false);
+      }, { passive: true });
+
+      motionShell.addEventListener('touchend', () => {
+        pointer.active = false;
+      }, { passive: true });
 
       function renderMotion(now) {
         const dt = Math.min(32, now - lastTime || 16);
+        const frame = dt / 16.667;
         lastTime = now;
 
         if (motionVisible && width && height) {
@@ -491,25 +514,41 @@
           const config = motionStates[motionState];
           const t = now * .001;
 
+          pointer.strength *= Math.pow(.94, frame);
+          pointer.pulse *= Math.pow(.90, frame);
+
           particles.forEach((p, index) => {
-            const wobbleX = Math.sin(t * config.speed + p.seed) * .000018 * config.drift * dt;
-            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .000018 * config.drift * dt;
+            const wobbleX = Math.sin(t * config.speed + p.seed) * .0000045 * config.drift * frame;
+            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .0000045 * config.drift * frame;
             p.vx += wobbleX;
             p.vy += wobbleY;
 
-            if (pointer.active) {
+            if (pointer.active || pointer.strength > .03) {
               const dx = pointer.x - p.x;
               const dy = pointer.y - p.y;
-              const dist = Math.max(.035, Math.hypot(dx,dy));
-              const influence = Math.max(0, 1 - dist / .45) * config.pull * .00008 * dt;
-              p.vx += dx / dist * influence;
-              p.vy += dy / dist * influence;
+              const dist = Math.max(.025, Math.hypot(dx,dy));
+              const radius = .34;
+              const proximity = Math.max(0, 1 - dist / radius);
+
+              if (proximity > 0) {
+                const force = proximity * proximity * config.pull * .00022 * Math.max(.25, pointer.strength) * frame;
+                p.vx += dx / dist * force;
+                p.vy += dy / dist * force;
+              }
             }
 
-            p.vx *= .992;
-            p.vy *= .992;
-            p.x += p.vx * dt + Math.sin(t * .3 + p.seed) * .00001 * dt;
-            p.y += p.vy * dt + Math.cos(t * .27 + p.seed) * .00001 * dt;
+            p.vx *= Math.pow(.965, frame);
+            p.vy *= Math.pow(.965, frame);
+
+            const maxVelocity = .0014;
+            const velocity = Math.hypot(p.vx,p.vy);
+            if (velocity > maxVelocity) {
+              p.vx = p.vx / velocity * maxVelocity;
+              p.vy = p.vy / velocity * maxVelocity;
+            }
+
+            p.x += p.vx * frame + Math.sin(t * .18 + p.seed) * .000004 * frame;
+            p.y += p.vy * frame + Math.cos(t * .16 + p.seed) * .000004 * frame;
 
             if (p.x < -.04) p.x = 1.04;
             if (p.x > 1.04) p.x = -.04;
@@ -521,7 +560,7 @@
             const isRed = (index % Math.max(2, Math.round(1 / config.red))) === 0;
             ctx.beginPath();
             ctx.arc(x, y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = isRed ? 'rgba(227,27,35,.78)' : 'rgba(247,247,245,.46)';
+            ctx.fillStyle = isRed ? 'rgba(227,27,35,.76)' : 'rgba(247,247,245,.42)';
             ctx.fill();
           });
 
@@ -531,26 +570,58 @@
               const dx = (a.x - b.x) * width;
               const dy = (a.y - b.y) * height;
               const dist = Math.hypot(dx,dy);
-              const maxDist = motionState === 'create' ? 128 : motionState === 'feel' ? 150 : 116;
+              const maxDist = motionState === 'create' ? 122 : motionState === 'feel' ? 138 : 112;
               if (dist < maxDist) {
-                const alpha = (1 - dist / maxDist) * (motionState === 'feel' ? .13 : .18);
+                const alpha = (1 - dist / maxDist) * (motionState === 'feel' ? .11 : .15);
                 ctx.beginPath();
                 ctx.moveTo(a.x * width, a.y * height);
                 ctx.lineTo(b.x * width, b.y * height);
                 ctx.strokeStyle = 'rgba(247,247,245,' + alpha.toFixed(3) + ')';
-                ctx.lineWidth = .7;
+                ctx.lineWidth = .65;
                 ctx.stroke();
               }
             }
           }
 
-          if (pointer.active) {
-            const px = pointer.x * width, py = pointer.y * height;
-            const glow = ctx.createRadialGradient(px,py,0,px,py,90);
-            glow.addColorStop(0,'rgba(227,27,35,.12)');
+          if (pointer.active || pointer.strength > .03) {
+            const px = pointer.x * width;
+            const py = pointer.y * height;
+            const strength = Math.max(pointer.active ? .65 : 0, pointer.strength);
+
+            particles.forEach(p => {
+              const x = p.x * width;
+              const y = p.y * height;
+              const dist = Math.hypot(x - px, y - py);
+              if (dist < 118) {
+                const alpha = (1 - dist / 118) * .28 * strength;
+                ctx.beginPath();
+                ctx.moveTo(px,py);
+                ctx.lineTo(x,y);
+                ctx.strokeStyle = 'rgba(227,27,35,' + alpha.toFixed(3) + ')';
+                ctx.lineWidth = .9;
+                ctx.stroke();
+              }
+            });
+
+            const glow = ctx.createRadialGradient(px,py,0,px,py,105);
+            glow.addColorStop(0,'rgba(227,27,35,' + (.10 * strength).toFixed(3) + ')');
+            glow.addColorStop(.35,'rgba(227,27,35,' + (.045 * strength).toFixed(3) + ')');
             glow.addColorStop(1,'rgba(227,27,35,0)');
             ctx.fillStyle = glow;
-            ctx.fillRect(px-90,py-90,180,180);
+            ctx.fillRect(px-105,py-105,210,210);
+
+            const ringRadius = 18 + (1 - pointer.pulse) * 24;
+            const ringAlpha = Math.max(.12, .5 * pointer.pulse) * strength;
+            ctx.beginPath();
+            ctx.arc(px,py,ringRadius,0,Math.PI*2);
+            ctx.strokeStyle = 'rgba(227,27,35,' + ringAlpha.toFixed(3) + ')';
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(px,py,2.4,0,Math.PI*2);
+            ctx.fillStyle = 'rgba(227,27,35,' + (.82 * strength).toFixed(3) + ')';
+            ctx.fill();
           }
         }
 
