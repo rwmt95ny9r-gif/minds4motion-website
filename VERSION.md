@@ -1,8 +1,20 @@
-# MINDS4MOTION Website — v1.3.5
+# MINDS4MOTION Website — v1.3.6
 
 **Release:** 18 November 2026  
 **Status:** visual alignment patch — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.6 — Hero alignment refinement II
+
+Second optical adjustment of the red **4** in the large hero wordmark.
+
+### Changed
+
+- Shifted the red **4** further to the right.
+- Target: visually align its right edge with the **N** in `MOTION` below.
+- No other layout, interaction or content changes.
+
+---
 
 ## v1.3.5 — Hero alignment refinement
 
