@@ -63,7 +63,7 @@
     .motion-state{position:relative;overflow:hidden}
     .motion-shell{position:relative;min-height:620px;border:1px solid #222225;border-radius:36px;background:
       radial-gradient(circle at 50% 58%,rgba(227,27,35,.08),transparent 0 9%,transparent 36%),
-      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate}
+      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
     .motion-shell::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.018) 42% 43%,transparent 43% 100%);pointer-events:none;z-index:1}
     .motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:0}
     .motion-ui{position:relative;z-index:2;min-height:620px;padding:42px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
@@ -190,7 +190,7 @@
           <div class="motion-ui">
             <div class="motion-top">
               <span class="motion-index">Interactive fragment / 01</span>
-              <span class="motion-hint">Touch or move to shape it</span>
+              <span class="motion-hint">Drag to shape it · scroll outside</span>
             </div>
             <div class="motion-center">
               <p class="motion-question">Think. Feel. Create.</p>
@@ -407,7 +407,7 @@
             'Stay curious long enough for the obvious to change.',
             'A thought can move before it becomes an answer.'
           ],
-          speed: .20, drift: .16, pull: .85, red: .16
+          speed: .08, drift: .08, pull: 1.15, red: .16
         },
         feel: {
           phrases: [
@@ -417,7 +417,7 @@
             'Home is a feeling.',
             'Let the feeling exist before you name it.'
           ],
-          speed: .12, drift: .24, pull: .65, red: .28
+          speed: .05, drift: .12, pull: .95, red: .28
         },
         create: {
           phrases: [
@@ -427,14 +427,14 @@
             'Follow the line and see where it goes.',
             'Permission is sometimes the first creative act.'
           ],
-          speed: .28, drift: .32, pull: 1.05, red: .52
+          speed: .11, drift: .16, pull: 1.35, red: .52
         }
       };
 
       const particles = Array.from({ length: 42 }, (_, i) => ({
         x: Math.random(), y: Math.random(),
-        vx: (Math.random() - .5) * .00016,
-        vy: (Math.random() - .5) * .00016,
+        vx: (Math.random() - .5) * .000025,
+        vy: (Math.random() - .5) * .000025,
         seed: Math.random() * Math.PI * 2,
         size: i % 9 === 0 ? 1.7 : 1
       }));
@@ -492,13 +492,19 @@
 
       motionShell.addEventListener('touchstart', event => {
         const touch = event.touches && event.touches[0];
-        if (touch) setPointerFromClient(touch.clientX, touch.clientY, true);
-      }, { passive: true });
+        if (touch) {
+          event.preventDefault();
+          setPointerFromClient(touch.clientX, touch.clientY, true);
+        }
+      }, { passive: false });
 
       motionShell.addEventListener('touchmove', event => {
         const touch = event.touches && event.touches[0];
-        if (touch) setPointerFromClient(touch.clientX, touch.clientY, false);
-      }, { passive: true });
+        if (touch) {
+          event.preventDefault();
+          setPointerFromClient(touch.clientX, touch.clientY, false);
+        }
+      }, { passive: false });
 
       motionShell.addEventListener('touchend', () => {
         pointer.active = false;
@@ -518,8 +524,8 @@
           pointer.pulse *= Math.pow(.90, frame);
 
           particles.forEach((p, index) => {
-            const wobbleX = Math.sin(t * config.speed + p.seed) * .0000045 * config.drift * frame;
-            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .0000045 * config.drift * frame;
+            const wobbleX = Math.sin(t * config.speed + p.seed) * .0000009 * config.drift * frame;
+            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .0000009 * config.drift * frame;
             p.vx += wobbleX;
             p.vy += wobbleY;
 
@@ -527,28 +533,28 @@
               const dx = pointer.x - p.x;
               const dy = pointer.y - p.y;
               const dist = Math.max(.025, Math.hypot(dx,dy));
-              const radius = .34;
+              const radius = .42;
               const proximity = Math.max(0, 1 - dist / radius);
 
               if (proximity > 0) {
-                const force = proximity * proximity * config.pull * .00022 * Math.max(.25, pointer.strength) * frame;
+                const force = proximity * proximity * config.pull * .00048 * Math.max(.4, pointer.strength) * frame;
                 p.vx += dx / dist * force;
                 p.vy += dy / dist * force;
               }
             }
 
-            p.vx *= Math.pow(.965, frame);
-            p.vy *= Math.pow(.965, frame);
+            p.vx *= Math.pow(.91, frame);
+            p.vy *= Math.pow(.91, frame);
 
-            const maxVelocity = .0014;
+            const maxVelocity = .00032;
             const velocity = Math.hypot(p.vx,p.vy);
             if (velocity > maxVelocity) {
               p.vx = p.vx / velocity * maxVelocity;
               p.vy = p.vy / velocity * maxVelocity;
             }
 
-            p.x += p.vx * frame + Math.sin(t * .18 + p.seed) * .000004 * frame;
-            p.y += p.vy * frame + Math.cos(t * .16 + p.seed) * .000004 * frame;
+            p.x += p.vx * frame + Math.sin(t * .10 + p.seed) * .0000008 * frame;
+            p.y += p.vy * frame + Math.cos(t * .09 + p.seed) * .0000008 * frame;
 
             if (p.x < -.04) p.x = 1.04;
             if (p.x > 1.04) p.x = -.04;
