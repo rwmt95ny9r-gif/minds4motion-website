@@ -81,11 +81,8 @@
     .music-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
     .chip{border:1px solid #303034;border-radius:999px;padding:9px 13px;color:#d2d2d3;font-size:.84rem}
     .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center}
-    .portrait-abstract{min-height:500px;border-radius:34px;border:1px solid #242427;background:
-      radial-gradient(circle at 32% 32%,rgba(227,27,35,.28),transparent 0 4%,transparent 22%),
-      linear-gradient(155deg,#f2f2ef 0 30%,#d7d7d5 30% 31%,#0b0b0c 31% 100%);
-      position:relative;overflow:hidden}
-    .portrait-abstract::before{content:"M";position:absolute;left:10%;bottom:-6%;font-size:22rem;font-weight:800;letter-spacing:-.12em;color:#0a0a0b;-webkit-text-stroke:1px #343438;opacity:.95}
+    .portrait-photo{border-radius:34px;border:1px solid #242427;background:#0b0b0c;position:relative;overflow:hidden;align-self:center}
+    .portrait-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain}
     .about-copy h3{font-size:clamp(2.2rem,4.5vw,4rem);line-height:1.03;letter-spacing:-.05em;margin:12px 0 24px;font-weight:560}
     .about-copy p{font-size:1.1rem;line-height:1.72;color:var(--muted);margin:0 0 18px}
     .about-copy strong{color:var(--text);font-weight:540}
@@ -96,7 +93,7 @@
     footer{border-top:1px solid #171719;padding:30px 0 42px;color:#74747a;font-size:.83rem}
     .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center}
     @media(max-width:900px){
-      .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-abstract{min-height:380px}.creative-grid{grid-template-columns:1fr}
+      .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-photo{max-width:620px;margin:0 auto}.creative-grid{grid-template-columns:1fr}
     }
     @media(max-width:620px){
       .wrap{padding:0 15px}.nav-links{display:none}.hero{padding-top:22px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}
@@ -200,7 +197,7 @@
 
       <section id="about" aria-labelledby="about-title">
         <div class="about">
-          <div class="portrait-abstract" aria-hidden="true"></div>
+          <figure class="portrait-photo"><img src="assets/michael-behind-minds4motion.jpg" alt="MINDS4MOTION portrait collage featuring Michael, the M mark and personal visual fragments" width="360" height="360" loading="lazy" decoding="async"></figure>
           <div class="about-copy"><span class="eyebrow">Behind MINDS4MOTION</span><h3 id="about-title">The face. The head. The human behind it.</h3><p>I’m Michael. <strong>Not an artist by profession — and that is part of the point.</strong></p><p>I think a lot, feel deeply, create things and stay curious about what happens when those three meet. MINDS4MOTION is not about having figured everything out. It is a place to make something visible while it is still becoming.</p><p><strong>1 + 1 ≥ 2.</strong> A technical expression, a personal conviction: what we connect can become more than what existed separately.</p></div>
         </div>
       </section>
