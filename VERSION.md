@@ -1,8 +1,24 @@
-# MINDS4MOTION Website — v1.3.0
+# MINDS4MOTION Website — v1.3.1
 
 **Release:** 18 November 2026  
-**Status:** feature release — pending merge and GitHub Pages publish  
+**Status:** interaction refinement — pending merge and GitHub Pages publish  
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.3.1 — MOTION / STATE interaction refinement
+
+Refines the first MOTION / STATE release after iPhone screen-capture review.
+
+### Changed
+
+- Significantly reduced autonomous particle speed for a calmer visual field.
+- Reduced particle count slightly to create more negative space.
+- Strengthened pointer/touch attraction so movement is clearly influenced by the visitor.
+- Added explicit touchstart/touchmove handling for iPhone interaction.
+- Added a subtle red touch point, expanding ring and temporary connections to nearby particles.
+- Added velocity clamping and stronger damping to prevent the field from becoming hectic.
+- Kept THINK / FEEL / CREATE distinct, but all three now remain intentionally calm.
+
+---
 
 ## v1.3.0 — MOTION / STATE
 
