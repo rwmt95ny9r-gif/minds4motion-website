@@ -1,7 +1,7 @@
 # MINDS4MOTION Website — v1.4.0
 
 **Release:** 18 November 2026  
-**Status:** legal-information feature — draft pending complete postal address
+**Status:** legal-information feature — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
 
 ## v1.4.0 — Imprint
@@ -17,10 +17,10 @@ Adds a dedicated legal-information page for the Germany-based MINDS4MOTION websi
 - Added a consumer-dispute-resolution statement.
 - Kept the visual treatment consistent with the existing black / white / red MINDS4MOTION identity.
 
-### Required before publication
+### Publication status
 
-- Replace the marked address placeholders with the complete serviceable postal address of the provider.
-- Do not publish the Imprint with placeholders.
+- Complete serviceable postal address added.
+- Imprint is ready to merge and publish.
 
 ---
 
