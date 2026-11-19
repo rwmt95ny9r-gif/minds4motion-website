@@ -1,8 +1,23 @@
-# MINDS4MOTION Website — v1.4.5
+# MINDS4MOTION Website — v1.4.6
 
 **Release:** 18 November 2026  
-**Status:** compact mobile header refinement — ready for merge
+**Status:** GitHub Pages two-job deployment fix — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.6 — GitHub Pages two-job deployment
+
+Refactors the deployment workflow to follow GitHub's recommended Pages pattern.
+
+### Changed
+
+- Split the previous single deployment job into separate `build` and `deploy` jobs.
+- The `build` job checks out the site, configures Pages and uploads the Pages artifact.
+- The `deploy` job starts only after `build` completes successfully via `needs: build`.
+- Restores the standard `github-pages` artifact name.
+- Avoids the intermittent artifact-visibility race observed when upload and deploy run back-to-back in the same job.
+- No website content or visual changes.
+
+---
 
 ## v1.4.5 — Compact mobile header
 
