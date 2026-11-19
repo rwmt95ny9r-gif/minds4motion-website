@@ -1,8 +1,22 @@
-# MINDS4MOTION Website — v1.4.4
+# MINDS4MOTION Website — v1.4.5
 
 **Release:** 18 November 2026  
-**Status:** mobile hero offset fix — ready for merge
+**Status:** compact mobile header refinement — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.5 — Compact mobile header
+
+Refines the mobile header proportions after the new chapter navigation was introduced.
+
+### Changed
+
+- Reduced the mobile MINDS4MOTION header height from `84px` to `58px`.
+- Slightly reduced the small wordmark size on mobile.
+- Reduced the mobile hero top padding from `57px` to `32px`.
+- Moves `#JUSTCREATIVE` visibly upward while preserving its safe spacing below the sticky header.
+- Chapter navigation and desktop layout remain unchanged.
+
+---
 
 ## v1.4.4 — Mobile hero offset fix
 
