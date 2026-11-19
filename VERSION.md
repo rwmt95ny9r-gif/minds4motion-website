@@ -1,8 +1,21 @@
-# MINDS4MOTION Website — v1.4.3
+# MINDS4MOTION Website — v1.4.4
 
 **Release:** 18 November 2026  
-**Status:** GitHub Pages retry robustness patch — ready for merge
+**Status:** mobile hero offset fix — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.4 — Mobile hero offset fix
+
+Corrects the mobile hero position after the chapter-navigation layer was introduced.
+
+### Changed
+
+- Increased the mobile hero top padding from `22px` to `57px`.
+- Compensates for the additional 35px fixed chapter-navigation layer.
+- Restores the full visibility of `#JUSTCREATIVE` below the sticky header.
+- No changes to hero typography, alignment, navigation behavior or desktop layout.
+
+---
 
 ## v1.4.3 — GitHub Pages retry robustness
 
