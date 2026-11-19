@@ -1,8 +1,32 @@
-# MINDS4MOTION Website — v1.4.0
+# MINDS4MOTION Website — v1.4.1
 
 **Release:** 18 November 2026  
-**Status:** legal-information feature — ready for merge
+**Status:** privacy-policy and contact-protection patch — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.1 — Privacy Policy + email obfuscation
+
+Adds a dedicated privacy page and improves protection of the public contact email address.
+
+### New
+
+- Added `privacy.html` in the existing MINDS4MOTION visual language.
+- Added a small **Privacy** link next to **Imprint** in the landing-page footer.
+- Documented GitHub Pages hosting and security-related IP logging.
+- Documented that MINDS4MOTION currently uses no own analytics, advertising tracking, profiling, marketing pixels or contact forms.
+- Added information on email contact, external links, data-subject rights and the competent Bavarian supervisory authority.
+
+### Changed
+
+- Removed the clear-text email address and static `mailto:` value from `imprint.html`.
+- The email address is now assembled client-side from separate JavaScript fragments and rendered as a clickable mail link in the browser.
+- The same client-side rendering approach is used on the Privacy Policy page.
+
+### Note
+
+This reduces trivial source-code harvesting, but no publicly displayed email address can be made completely bot-proof.
+
+---
 
 ## v1.4.0 — Imprint
 
