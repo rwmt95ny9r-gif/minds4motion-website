@@ -1,8 +1,28 @@
-# MINDS4MOTION Website — v1.4.1
+# MINDS4MOTION Website — v1.4.2
 
 **Release:** 18 November 2026  
-**Status:** privacy-policy and contact-protection patch — ready for merge
+**Status:** navigation and footer consistency release — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.2 — Chapter navigation + unified footer
+
+Adds a compact sticky chapter navigation below the red scroll-progress bar and aligns footer presentation across all public pages.
+
+### New
+
+- Added a mini chapter navigation directly below the red progress bar on the landing page.
+- Added matching chapter navigation to Imprint and Privacy Policy.
+- The active chapter is highlighted while scrolling.
+- On mobile, the chapter navigation remains horizontally scrollable and automatically keeps the active item in view.
+- Added scroll-margin offsets so chapter links land cleanly below the fixed navigation layers.
+
+### Changed
+
+- Footer content is now identical on Landing, Imprint and Privacy.
+- Footer typography, spacing, border treatment and mobile stacking are aligned across all three pages.
+- Imprint and Privacy now also show the red scroll-progress bar.
+
+---
 
 ## v1.4.1 — Privacy Policy + email obfuscation
 

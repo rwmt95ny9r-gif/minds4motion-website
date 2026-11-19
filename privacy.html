@@ -12,9 +12,18 @@
     *,*::before,*::after{box-sizing:border-box}
     html{background:var(--bg)}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
-    a{color:inherit}
+    a{color:inherit;text-decoration:none}
     .wrap{max-width:var(--max);margin:auto;padding:0 22px}
-    header{border-bottom:1px solid #171719}
+    .scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:80;pointer-events:none}
+    .scroll-progress span{display:block;width:0;height:100%;background:var(--accent);box-shadow:0 0 12px rgba(227,27,35,.65)}
+    .chapter-nav{position:fixed;top:2px;left:0;right:0;height:33px;z-index:75;background:rgba(5,5,5,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.045)}
+    .chapter-nav-inner{height:100%;max-width:var(--max);margin:auto;padding:0 22px;display:flex;align-items:center;gap:18px;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+    .chapter-nav-inner::-webkit-scrollbar{display:none}
+    .chapter-nav a{position:relative;flex:none;color:#77777d;text-decoration:none;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase}
+    .chapter-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .22s ease}
+    .chapter-nav a.is-active{color:#f1f1f1}
+    .chapter-nav a.is-active::after{right:0}
+    header{position:sticky;top:35px;z-index:50;background:rgba(5,5,5,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #171719}
     .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
     .brand{font-size:1rem;letter-spacing:.22em;text-decoration:none;white-space:nowrap}
     .brand .four{color:var(--accent)}
@@ -24,7 +33,7 @@
     .eyebrow{color:var(--accent);font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
     h1{font-size:clamp(3.2rem,8vw,6.4rem);line-height:.95;letter-spacing:-.06em;font-weight:560;margin:18px 0 50px}
     .legal{border-top:1px solid var(--line)}
-    section{padding:34px 0;border-bottom:1px solid var(--line)}
+    section{padding:34px 0;border-bottom:1px solid var(--line);scroll-margin-top:120px}
     h2{font-size:1rem;letter-spacing:.03em;margin:0 0 14px;font-weight:600}
     p,li{color:var(--muted);font-size:1rem;line-height:1.7}
     p{margin:0}
@@ -32,12 +41,25 @@
     ul{margin:12px 0 0;padding-left:20px}
     strong{color:var(--text);font-weight:550}
     .small{font-size:.86rem;color:#74747a}
-    footer{padding:28px 0 42px;color:#74747a;font-size:.82rem}
-    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    @media(max-width:620px){.wrap{padding:0 15px}main{padding-top:62px}.nav{height:74px}}
+    footer{border-top:1px solid #171719;padding:30px 0 42px;color:#74747a;font-size:.83rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center}
+    @media(max-width:620px){.wrap{padding:0 15px}.chapter-nav-inner{padding:0 15px;gap:16px}main{padding-top:62px}.nav{height:74px}.footer-inner{flex-direction:column;align-items:flex-start}}
   </style>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+  <nav class="chapter-nav" aria-label="Page chapters">
+    <div class="chapter-nav-inner">
+      <a href="#controller">Controller</a>
+      <a href="#hosting">Hosting</a>
+      <a href="#tracking">Tracking</a>
+      <a href="#email">Email</a>
+      <a href="#links">Links</a>
+      <a href="#rights">Rights</a>
+      <a href="#complaint">Complaint</a>
+      <a href="#changes">Changes</a>
+    </div>
+  </nav>
   <header>
     <div class="wrap nav">
       <a class="brand" href="index.html" aria-label="Back to MINDS4MOTION">MINDS<span class="four">4</span>MOTION</a>
@@ -51,7 +73,7 @@
       <h1>Privacy Policy.</h1>
 
       <div class="legal">
-        <section>
+        <section id="controller">
           <h2>1. Controller</h2>
           <p><strong>Michael Decker / MINDS4MOTION</strong><br>
           Elsterstrasse 6<br>
@@ -60,30 +82,30 @@
           <p>Email: <a id="privacy-email" href="#" rel="nofollow">Show email address</a></p>
         </section>
 
-        <section>
+        <section id="hosting">
           <h2>2. Hosting via GitHub Pages</h2>
           <p>This website is hosted using GitHub Pages, a static website hosting service provided by GitHub. When a GitHub Pages website is visited, GitHub states that the visitor's IP address is logged and stored for security purposes.</p>
           <p>The processing of technically necessary connection data serves the secure and reliable provision of this website. The legal basis is Art. 6(1)(f) GDPR. The legitimate interest lies in the secure, stable and technically functional operation of the website.</p>
           <p>Further information on data processing by GitHub is available in GitHub's privacy information.</p>
         </section>
 
-        <section>
+        <section id="tracking">
           <h2>3. No analytics, tracking or advertising cookies</h2>
           <p>MINDS4MOTION does not use its own web analytics, advertising tracking, profiling or marketing pixels. No consent-management platform is used because the website currently does not intentionally set non-essential cookies or use comparable tracking technologies.</p>
         </section>
 
-        <section>
+        <section id="email">
           <h2>4. Contact by email</h2>
           <p>If you contact MINDS4MOTION by email, the information you provide is processed for the purpose of handling and responding to your message.</p>
           <p>Depending on the content of the request, the legal basis is Art. 6(1)(b) GDPR where the communication relates to a contract or pre-contractual measures, or Art. 6(1)(f) GDPR for other legitimate communication. Data is deleted when it is no longer required for the purpose of the correspondence, subject to statutory retention obligations.</p>
         </section>
 
-        <section>
+        <section id="links">
           <h2>5. External links</h2>
           <p>This website contains links to external services, including Instagram. Data is not transmitted to those external services merely because such a link is displayed. A connection to the external provider is established only when you actively follow the link. The privacy policies of the respective providers then apply.</p>
         </section>
 
-        <section>
+        <section id="rights">
           <h2>6. Your rights</h2>
           <p>Subject to the applicable legal requirements, you have in particular the right to:</p>
           <ul>
@@ -96,7 +118,7 @@
           </ul>
         </section>
 
-        <section>
+        <section id="complaint">
           <h2>7. Right to lodge a complaint</h2>
           <p>You have the right to lodge a complaint with a data protection supervisory authority. The supervisory authority responsible for private-sector organisations in Bavaria is:</p>
           <p><strong>Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)</strong><br>
@@ -105,7 +127,7 @@
           Germany</p>
         </section>
 
-        <section>
+        <section id="changes">
           <h2>8. Changes to this Privacy Policy</h2>
           <p>This Privacy Policy may be updated if the website, the services used or the legal requirements change. The current version is the version published on this page.</p>
           <p class="small">Last updated: 19 November 2026</p>
@@ -117,12 +139,36 @@
   <footer>
     <div class="wrap footer-inner">
       <span>© <span id="year">2026</span> MINDS4MOTION</span>
-      <span><a href="imprint.html">Imprint</a> · Privacy</span>
+      <span>#justcreative · No tracking · No cookies · <a href="imprint.html">Imprint</a> · <a href="privacy.html">Privacy</a></span>
     </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    const progressBar = document.getElementById('scroll-progress-bar');
+    const chapterLinks = [...document.querySelectorAll('.chapter-nav a')];
+    const chapterSections = chapterLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
+    function updateLegalScroll() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollable > 0 ? Math.min(100, Math.max(0, scrollTop / scrollable * 100)) : 0) + '%';
+    }
+
+    if ('IntersectionObserver' in window) {
+      const chapterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          chapterLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id));
+          const active = chapterLinks.find(link => link.getAttribute('href') === '#' + entry.target.id);
+          if (active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+        });
+      }, {rootMargin:'-30% 0px -60% 0px',threshold:0});
+      chapterSections.forEach(section => chapterObserver.observe(section));
+    }
+
+    updateLegalScroll();
+    window.addEventListener('scroll', updateLegalScroll, {passive:true});
     (function () {
       const target = document.getElementById('privacy-email');
       const user = ['m','d'].join('');
