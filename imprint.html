@@ -60,7 +60,7 @@
 
         <section>
           <h2>Contact</h2>
-          <p>Email: <a href="mailto:md@minds4motion.com">md@minds4motion.com</a></p>
+          <p>Email: <a id="imprint-email" href="#" rel="nofollow">Show email address</a></p>
         </section>
 
         <section>
@@ -87,6 +87,17 @@
       <span>#justcreative</span>
     </div>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function () {
+      const target = document.getElementById('imprint-email');
+      const user = ['m','d'].join('');
+      const host = ['minds','4','motion'].join('');
+      const tld = ['c','o','m'].join('');
+      const address = user + '@' + host + '.' + tld;
+      target.textContent = address;
+      target.href = 'mailto:' + address;
+    }());
+  </script>
 </body>
 </html>
