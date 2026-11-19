@@ -1,8 +1,21 @@
-# MINDS4MOTION Website — v1.4.2
+# MINDS4MOTION Website — v1.4.3
 
 **Release:** 18 November 2026  
-**Status:** navigation and footer consistency release — ready for merge
+**Status:** GitHub Pages retry robustness patch — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.3 — GitHub Pages retry robustness
+
+Makes GitHub Pages deployments resilient to re-running failed jobs.
+
+### Changed
+
+- Pages artifacts now use a unique name per workflow attempt: `github-pages-${{ github.run_attempt }}`.
+- `deploy-pages` is explicitly pointed at the artifact for the current attempt.
+- Prevents duplicate `github-pages` artifacts from causing deployment ambiguity during re-runs.
+- No website content or visual changes.
+
+---
 
 ## v1.4.2 — Chapter navigation + unified footer
 
