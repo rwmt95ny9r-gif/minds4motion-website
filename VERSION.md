@@ -1,8 +1,40 @@
-# MINDS4MOTION Website — v1.4.7
+# MINDS4MOTION Website — v1.5.0
 
 **Release:** 18 November 2026  
-**Status:** Imprint navigation active-state fix — ready for merge
+**Status:** personal soundtrack feature — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.5.0 — Personal soundtrack
+
+Adds a dedicated music chapter that turns five personally meaningful tracks into a reduced emotional narrative.
+
+### New
+
+- Added a dedicated `Music` chapter between `Creative` and `Behind it`.
+- Added `Music` to both the desktop navigation and the compact chapter navigation.
+- Added five tracks with artist and emotional state:
+  - Light Falls — EMBRZ
+  - Wie Liebe geht — Lucien Voss
+  - Disco Mare — Luca Vasta
+  - Heartbeat — Hessian & Courtney Storm
+  - Tranquil — Virtua & Akraa
+- Light Falls receives a subtle personal annotation: `An anchor since 2023.`
+- Added the closing line `My soundtrack. My way.`
+
+### Changed
+
+- Reworked the existing Music card inside `Creative language` into a teaser for the new chapter.
+- Removed the previous artist-chip list to avoid duplication and generic playlist aesthetics.
+- Kept the section deliberately typographic: no cover art, embeds, players or third-party tracking.
+
+### Design intent
+
+- Black / white / red only.
+- Strong negative space.
+- Five tracks presented as five emotional states rather than a playlist.
+- Mobile layout collapses cleanly into an index / title / state rhythm.
+
+---
 
 ## v1.4.7 — Imprint navigation active-state fix
 
