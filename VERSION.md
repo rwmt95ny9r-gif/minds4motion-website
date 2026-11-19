@@ -1,8 +1,28 @@
-# MINDS4MOTION Website — v1.3.6
+# MINDS4MOTION Website — v1.4.0
 
 **Release:** 18 November 2026  
-**Status:** visual alignment patch — pending merge and GitHub Pages publish  
+**Status:** legal-information feature — draft pending complete postal address
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.0 — Imprint
+
+Adds a dedicated legal-information page for the Germany-based MINDS4MOTION website.
+
+### New
+
+- Added a dedicated English-language **Imprint** page.
+- Added a small, discreet **Imprint** link in the landing-page footer.
+- Structured the page around current German provider-information requirements under **§ 5 DDG** and **§ 18 MStV**.
+- Added contact information using the existing MINDS4MOTION email address.
+- Added a consumer-dispute-resolution statement.
+- Kept the visual treatment consistent with the existing black / white / red MINDS4MOTION identity.
+
+### Required before publication
+
+- Replace the marked address placeholders with the complete serviceable postal address of the provider.
+- Do not publish the Imprint with placeholders.
+
+---
 
 ## v1.3.6 — Hero alignment refinement II
 
