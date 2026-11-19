@@ -1,8 +1,22 @@
-# MINDS4MOTION Website — v1.4.6
+# MINDS4MOTION Website — v1.4.7
 
 **Release:** 18 November 2026  
-**Status:** GitHub Pages two-job deployment fix — ready for merge
+**Status:** Imprint navigation active-state fix — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.4.7 — Imprint navigation active-state fix
+
+Corrects the active chapter highlighting on the Imprint page.
+
+### Changed
+
+- Replaced the Imprint IntersectionObserver-based chapter detection with deterministic scroll-position tracking.
+- The active navigation item now follows the section whose top has passed the fixed navigation stack.
+- Clicking a chapter immediately activates the selected item.
+- The final chapter is forced active at the bottom of the page.
+- Main page and Privacy Policy navigation remain unchanged.
+
+---
 
 ## v1.4.6 — GitHub Pages two-job deployment
 
