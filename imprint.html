@@ -117,20 +117,40 @@
       progressBar.style.width = (scrollable > 0 ? Math.min(100, Math.max(0, scrollTop / scrollable * 100)) : 0) + '%';
     }
 
-    if ('IntersectionObserver' in window) {
-      const chapterObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          chapterLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id));
-          const active = chapterLinks.find(link => link.getAttribute('href') === '#' + entry.target.id);
-          if (active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
-        });
-      }, {rootMargin:'-30% 0px -60% 0px',threshold:0});
-      chapterSections.forEach(section => chapterObserver.observe(section));
+    function updateActiveChapter() {
+      const activationY = window.scrollY + 150;
+      let activeSection = chapterSections[0];
+
+      chapterSections.forEach(section => {
+        if (section.offsetTop <= activationY) activeSection = section;
+      });
+
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 4) {
+        activeSection = chapterSections[chapterSections.length - 1];
+      }
+
+      chapterLinks.forEach(link => {
+        link.classList.toggle('is-active', link.getAttribute('href') === '#' + activeSection.id);
+      });
+
+      const activeLink = chapterLinks.find(link => link.getAttribute('href') === '#' + activeSection.id);
+      if (activeLink) activeLink.scrollIntoView({behavior:'auto',block:'nearest',inline:'center'});
     }
 
-    updateLegalScroll();
-    window.addEventListener('scroll', updateLegalScroll, {passive:true});
+    chapterLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        chapterLinks.forEach(item => item.classList.toggle('is-active', item === link));
+      });
+    });
+
+    function updateLegalNavigation() {
+      updateLegalScroll();
+      updateActiveChapter();
+    }
+
+    updateLegalNavigation();
+    window.addEventListener('scroll', updateLegalNavigation, {passive:true});
+    window.addEventListener('resize', updateLegalNavigation);
     (function () {
       const target = document.getElementById('imprint-email');
       const user = ['m','d'].join('');
