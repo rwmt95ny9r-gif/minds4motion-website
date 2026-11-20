@@ -1,8 +1,16 @@
-# MINDS4MOTION Website — v1.6.0
+# MINDS4MOTION Website — v1.6.1
 
 **Release:** 18 November 2026  
-**Status:** Create Together demand-test layer — ready for merge
+**Status:** mobile Create Together header link — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.6.1 — Mobile Create Together entry
+
+- Added a compact `Create Together ↗` link in the mobile header, positioned to the right of the MINDS4MOTION wordmark.
+- Keeps the mini chapter navigation unchanged.
+- Desktop navigation remains unchanged.
+
+---
 
 ## v1.6.0 — Create Together
 
