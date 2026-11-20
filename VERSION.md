@@ -1,8 +1,38 @@
-# MINDS4MOTION Website — v1.5.0
+# MINDS4MOTION Website — v1.6.0
 
 **Release:** 18 November 2026  
-**Status:** personal soundtrack feature — ready for merge
+**Status:** Create Together demand-test layer — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.6.0 — Create Together
+
+Adds a deliberately light commercial layer without turning MINDS4MOTION into a conventional service website.
+
+### New
+
+- Added `create-together.html` as a separate public page.
+- Three offer directions:
+  1. Creative Sparring
+  2. Personal Story / Soundtrack
+  3. Creative Concepting
+- Each offer explains who it is for, how the work can unfold and a possible outcome.
+- Added a low-friction email CTA: `Tell me what’s moving you`.
+- Added deterministic mini chapter navigation for the new page.
+- No public pricing, booking engine, analytics or third-party embeds.
+
+### Main-site integration
+
+- Added `Create Together ↗` to the desktop navigation.
+- Added `Create Together` as the primary CTA in the closing section.
+- Existing landing-page chapter navigation remains unchanged.
+
+### Commercial reference
+
+- Added `docs/create-together-commercial-model.md`.
+- Contains positioning, detailed scope, pricing hypotheses, exclusions and a demand-test framework.
+- Public site intentionally does not expose pricing.
+
+---
 
 ## v1.5.0 — Personal soundtrack
 
