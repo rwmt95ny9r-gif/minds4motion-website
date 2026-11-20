@@ -30,6 +30,7 @@ Adds a deliberately light commercial layer without turning MINDS4MOTION into a c
 
 - Added `docs/create-together-commercial-model.md`.
 - Contains positioning, detailed scope, pricing hypotheses, exclusions and a demand-test framework.
+- The Pages workflow now excludes `docs/` from the deployed site artifact.
 - Public site intentionally does not expose pricing.
 
 ---
