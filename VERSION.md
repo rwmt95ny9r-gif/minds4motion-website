@@ -421,3 +421,46 @@ The public site continues to include:
 ## Boundaries
 
 The public site expresses the MINDS4MOTION creative identity. It deliberately excludes private Project Michael / M60 information that is not part of the public brand narrative, including personal family, legal, financial, health or employer-internal material.
+
+
+---
+
+## Project cut — website complete at v1.7.0
+
+**Decision date:** 20 November 2026
+
+The MINDS4MOTION website is considered feature-complete at **v1.7.0**.
+
+This is an intentional cut, not a pause in unfinished work.
+
+### What is complete
+
+- Core MINDS4MOTION identity and narrative
+- MOTION / STATE interaction
+- Four Worlds
+- Creative language and personal soundtrack
+- Behind MINDS4MOTION
+- Create Together as the light commercial edge
+- DE / EN language layer
+- Imprint and Privacy
+- GitHub Pages deployment flow
+- No tracking / no cookies approach
+
+### What happens next
+
+The website should now be allowed to exist and create resonance without further feature expansion.
+
+Future changes should only be made for one of these reasons:
+
+1. **Real user resonance** — inquiries, repeated feedback, misunderstandings or clear demand.
+2. **Legal / privacy requirements** — changes that are necessary to remain compliant.
+3. **Technical defects** — broken links, layout issues, deployment failures or accessibility problems.
+4. **Evidence-driven improvement** — a change supported by actual usage or concrete feedback, not by the urge to keep polishing.
+
+### Explicit non-goal
+
+Do not continue adding features, sections, visual effects, sales mechanics, analytics or infrastructure simply because they are possible.
+
+The next meaningful signal should come from the outside world.
+
+**Current state:** publish, observe, learn.
