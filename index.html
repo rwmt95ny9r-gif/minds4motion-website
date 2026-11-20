@@ -39,7 +39,9 @@
     .brand b{font-weight:500}.brand .four{color:var(--accent)}
     .mobile-create-link{display:none;color:#9a9aa0;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:color .2s ease}
     .mobile-create-link:hover,.mobile-create-link:focus-visible{color:var(--text)}
-    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.9rem}
+    .lang-switch{display:flex;align-items:center;gap:7px;margin-left:auto;font-size:.67rem;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
+    .lang-switch a{color:#77777d;transition:color .2s ease}.lang-switch a:hover,.lang-switch a:focus-visible{color:var(--text)}.lang-switch .active{color:var(--text)}.lang-switch .sep{color:#45454a}
+    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.9rem;margin-left:0}
     .nav-links a{position:relative;transition:color .2s ease}
     .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .25s ease}
     .nav-links a:hover,.nav-links a:focus-visible,.nav-links a.is-active{color:var(--text)}
@@ -162,7 +164,7 @@
       .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-photo{max-width:620px;margin:0 auto}.creative-grid{grid-template-columns:1fr}
     }
     @media(max-width:620px){
-      .wrap{padding:0 15px}.chapter-nav-inner{padding:0 15px;gap:16px}.nav{height:58px}.brand{font-size:.88rem;letter-spacing:.2em}.nav-links{display:none}.mobile-create-link{display:inline-flex;align-items:center;gap:4px}.hero{padding-top:32px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}.back-to-top{right:15px;bottom:16px;width:48px;height:48px}
+      .wrap{padding:0 15px}.chapter-nav-inner{padding:0 15px;gap:16px}.nav{height:58px}.brand{font-size:.88rem;letter-spacing:.2em}.nav-links{display:none}.mobile-create-link{display:inline-flex;align-items:center;gap:4px}.lang-switch{margin-left:0;font-size:.62rem;gap:5px}.hero{padding-top:32px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}.back-to-top{right:15px;bottom:16px;width:48px;height:48px}
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.back-to-top,.reveal,.nav-links a,.nav-links a::after{transition:none}.reveal{opacity:1;transform:none}}
   </style>
@@ -183,6 +185,7 @@
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="MINDS4MOTION home"><b>MINDS<span class="four">4</span>MOTION</b></a>
       <a class="mobile-create-link" href="create-together.html">Create Together <span aria-hidden="true">↗</span></a>
+      <div class="lang-switch" aria-label="Language"><a class="active" href="index.html" lang="en" aria-current="page">EN</a><span class="sep">/</span><a href="de/index.html" lang="de">DE</a></div>
       <div class="nav-links">
         <a href="#idea">Idea</a><a href="#motion">Motion</a><a href="#worlds">Worlds</a><a href="#creative">Creative</a><a href="#music">Music</a><a href="#about">Behind it</a><a href="create-together.html">Create Together ↗</a>
       </div>

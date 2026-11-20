@@ -1,8 +1,42 @@
-# MINDS4MOTION Website — v1.6.1
+# MINDS4MOTION Website — v1.7.0
 
 **Release:** 18 November 2026  
-**Status:** mobile Create Together header link — ready for merge
+**Status:** bilingual DE / EN language layer — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.7.0 — DE / EN language layer
+
+Adds a complete German-language layer while keeping English as the default public version.
+
+### Language model
+- English remains the default at `/`.
+- German lives under `/de/`.
+- Minimal text-only switch: `EN / DE`.
+- No flags.
+- Brand language such as `MINDS4MOTION`, `#justcreative`, `Think. Feel. Create.` and `Create Together` is intentionally preserved where it functions as identity rather than prose.
+
+### German pages
+- `de/index.html`
+- `de/create-together.html`
+- `de/imprint.html`
+- `de/privacy.html`
+
+### English pages
+- Added matching language switches to:
+  - `index.html`
+  - `create-together.html`
+  - `imprint.html`
+  - `privacy.html`
+
+### Editorial approach
+- German copy is adapted for tone and readability rather than translated mechanically word-for-word.
+- Dynamic MOTION / STATE phrases are translated as well.
+- Existing design, MOTION / STATE interaction, privacy model and Create Together demand-test logic remain unchanged.
+
+### Cut line
+v1.7.0 is intended as the final planned website feature release for now. Future changes should be maintenance, legal updates or evidence-driven changes based on real user response.
+
+---
 
 ## v1.6.1 — Mobile Create Together entry
 
