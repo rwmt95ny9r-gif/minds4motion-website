@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="MINDS4MOTION — think. feel. create. Ein kreativer Raum für Gedanken, Emotionen, Musik, Bilder und Bewegung. #justcreative">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MINDS4MOTION — #justcreative">
+  <meta property="og:description" content="Think. Feel. Create. Sichtbar machen, was uns bewegt.">
+  <title>MINDS4MOTION — #justcreative</title>
+  <style>
+    :root{
+      --bg:#050505;--bg-2:#0b0b0c;--panel:#101012;--panel-2:#151517;
+      --text:#f7f7f5;--muted:#aaa9ad;--line:#2a2a2d;--accent:#e31b23;
+      --white:#fff;--max:1180px;--radius:28px
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    body::selection{background:var(--accent);color:#fff}
+    a{color:inherit;text-decoration:none}
+    header{position:sticky;top:35px;z-index:50;background:rgba(5,5,5,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.045)}
+    .scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:80;pointer-events:none}
+    .scroll-progress span{display:block;width:0;height:100%;background:var(--accent);box-shadow:0 0 12px rgba(227,27,35,.65);transform-origin:left center}
+    .chapter-nav{position:fixed;top:2px;left:0;right:0;height:33px;z-index:75;background:rgba(5,5,5,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.045)}
+    .chapter-nav-inner{height:100%;max-width:var(--max);margin:auto;padding:0 22px;display:flex;align-items:center;gap:18px;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+    .chapter-nav-inner::-webkit-scrollbar{display:none}
+    .chapter-nav a{position:relative;flex:none;color:#77777d;text-decoration:none;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s ease}
+    .chapter-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .22s ease}
+    .chapter-nav a:hover,.chapter-nav a:focus-visible,.chapter-nav a.is-active{color:#f1f1f1}
+    .chapter-nav a.is-active::after{right:0}
+
+    button{font:inherit}
+    .wrap{max-width:var(--max);margin:auto;padding:0 22px}
+    .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-size:1rem;letter-spacing:.22em;white-space:nowrap}
+    .brand b{font-weight:500}.brand .four{color:var(--accent)}
+    .mobile-create-link{display:none;color:#9a9aa0;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:color .2s ease}
+    .mobile-create-link:hover,.mobile-create-link:focus-visible{color:var(--text)}
+    .lang-switch{display:flex;align-items:center;gap:7px;margin-left:auto;font-size:.67rem;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
+    .lang-switch a{color:#77777d;transition:color .2s ease}.lang-switch a:hover,.lang-switch a:focus-visible{color:var(--text)}.lang-switch .active{color:var(--text)}.lang-switch .sep{color:#45454a}
+    .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.9rem;margin-left:0}
+    .nav-links a{position:relative;transition:color .2s ease}
+    .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .25s ease}
+    .nav-links a:hover,.nav-links a:focus-visible,.nav-links a.is-active{color:var(--text)}
+    .nav-links a:hover::after,.nav-links a:focus-visible::after,.nav-links a.is-active::after{right:0}
+    .back-to-top{position:fixed;right:max(18px,calc((100vw - var(--max))/2 + 18px));bottom:22px;width:52px;height:52px;border-radius:50%;border:1px solid #343438;background:rgba(16,16,18,.84);color:var(--text);display:grid;place-items:center;z-index:60;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.34);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;transform:translateY(14px) scale(.96);pointer-events:none;transition:opacity .22s ease,transform .22s ease,border-color .22s ease,background .22s ease}
+    .back-to-top.is-visible{opacity:1;transform:none;pointer-events:auto}
+    .back-to-top:hover,.back-to-top:focus-visible{border-color:var(--accent);background:#211012;outline:none}
+    .back-to-top svg{width:20px;height:20px}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.65,.3,1),transform .7s cubic-bezier(.2,.65,.3,1)}
+    .reveal.is-visible{opacity:1;transform:none}
+    .hero{min-height:calc(100vh - 84px);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:52px;padding:42px 0 82px}
+    .kicker{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+    h1{font-size:clamp(4rem,10vw,8.2rem);line-height:.88;letter-spacing:-.075em;margin:24px 0 26px;font-weight:570}
+    h1 .four{color:var(--accent);display:inline-block;transform:translateX(.095em)}
+    .hero-copy{font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.38;max-width:680px;color:#d9d9d9;letter-spacing:-.02em}
+    .hero-copy strong{color:var(--white);font-weight:560}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid #3d3d41;border-radius:999px;padding:13px 20px;font-size:.9rem;transition:.2s}
+    .btn:hover,.btn:focus-visible{border-color:var(--accent);background:#211012}
+    .btn.primary{background:var(--text);color:#090909;border-color:var(--text)}
+    .btn.primary:hover,.btn.primary:focus-visible{background:var(--accent);border-color:var(--accent);color:white}
+    .hero-card{position:relative;min-height:540px;border:1px solid #212124;background:
+      linear-gradient(180deg,rgba(227,27,35,.04),transparent 38%),
+      radial-gradient(circle at 68% 26%,rgba(227,27,35,.2),transparent 0 6%,transparent 24%),
+      linear-gradient(145deg,#171719 0 40%,#0b0b0c 40% 100%);
+      border-radius:44px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:34px}
+    .hero-card::before{content:"";position:absolute;width:190%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);transform:rotate(-18deg);opacity:.55}
+    .hero-card-inner{text-align:center;position:relative;z-index:1;width:100%;display:flex;align-items:center;justify-content:center}
+    .hero-logo{display:block;width:min(100%,640px);height:auto;aspect-ratio:1/1;object-fit:contain;border-radius:24px}
+
+    .motion-state{position:relative;overflow:hidden}
+    .motion-shell{position:relative;min-height:620px;border:1px solid #222225;border-radius:36px;background:
+      radial-gradient(circle at 50% 58%,rgba(227,27,35,.08),transparent 0 9%,transparent 36%),
+      linear-gradient(180deg,#0b0b0c 0%,#080809 100%);overflow:hidden;isolation:isolate;-webkit-user-select:none;user-select:none}
+    .motion-shell::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.018) 42% 43%,transparent 43% 100%);pointer-events:none;z-index:1}
+    .motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;overscroll-behavior:contain;z-index:0;cursor:crosshair}
+    .motion-ui{position:relative;z-index:2;min-height:620px;padding:42px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+    .motion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+    .motion-index{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+    .motion-hint{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#77777d;text-align:right}
+    .motion-center{max-width:760px;margin:auto;text-align:center;padding:38px 0;pointer-events:none}
+    .motion-question{font-size:clamp(2.6rem,6vw,5.7rem);line-height:.98;letter-spacing:-.06em;font-weight:560;margin:0 0 34px}
+    .motion-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;pointer-events:auto}
+    .motion-choice{appearance:none;border:1px solid #343438;background:rgba(10,10,11,.72);color:#d8d8da;border-radius:999px;padding:12px 18px;letter-spacing:.14em;font-size:.75rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .2s ease,color .2s ease,background .2s ease,transform .2s ease;touch-action:manipulation;position:relative;z-index:3}
+    .motion-choice:hover,.motion-choice:focus-visible{border-color:#77777d;color:#fff;outline:none;transform:translateY(-1px)}
+    .motion-choice.is-active{border-color:var(--accent);background:#211012;color:#fff}
+    .motion-phrase{min-height:4.2em;margin:34px auto 0;max-width:660px;color:#ededed;font-size:clamp(1.25rem,2.4vw,2rem);line-height:1.35;letter-spacing:-.025em;transition:opacity .18s ease,transform .18s ease}
+    .motion-phrase.is-changing{opacity:0;transform:translateY(5px)}
+    .motion-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+    .motion-signature{font-size:.75rem;letter-spacing:.28em;text-transform:uppercase;color:#8c8c91}
+    .motion-signature b{color:var(--accent);font-weight:700}
+    .motion-coordinate{font-variant-numeric:tabular-nums;font-size:.72rem;color:#626267;letter-spacing:.08em}
+    @media(max-width:620px){
+      .motion-shell,.motion-ui{min-height:560px}.motion-shell{border-radius:26px}.motion-ui{padding:24px 20px}.motion-top{gap:12px}.motion-hint{max-width:150px}.motion-center{padding:30px 0}.motion-choices{gap:8px}.motion-choice{padding:11px 14px;font-size:.68rem}.motion-bottom{align-items:center}.motion-coordinate{display:none}
+    }
+    section{padding:110px 0;border-top:1px solid #171719;scroll-margin-top:135px}
+    .section-head{display:grid;grid-template-columns:.58fr 1.42fr;gap:36px;align-items:start;margin-bottom:54px}
+    .eyebrow{color:var(--accent);font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;padding-top:8px}
+    h2{font-size:clamp(2.3rem,5.5vw,4.8rem);line-height:1.02;letter-spacing:-.055em;font-weight:560;margin:0}
+    .lead{font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.6;color:var(--muted);max-width:820px;margin:26px 0 0}
+    .manifesto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .manifesto article{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:32px;min-height:260px}
+    .manifesto .num{color:var(--accent);font-size:.74rem;letter-spacing:.16em}
+    .manifesto h3{font-size:1.8rem;letter-spacing:-.04em;margin:54px 0 16px;font-weight:560}
+    .manifesto p{margin:0;color:var(--muted);line-height:1.62}
+    .quote{margin:72px 0 0;padding:42px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:clamp(1.65rem,3vw,2.7rem);line-height:1.28;letter-spacing:-.035em;max-width:980px}
+    .quote em{font-style:normal;color:var(--accent)}
+    .worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .world{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:28px;min-height:245px;display:flex;flex-direction:column;justify-content:space-between}
+    .world-icons{display:flex;align-items:center;gap:16px;color:var(--white);min-height:48px}
+    .world-icons svg{width:38px;height:38px;display:block;flex:none}
+    .world-icons .icon-red{color:var(--accent)}
+    .world-icons .icon-white{color:var(--white)}
+    .world-icons .stroke{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .world-icons .stroke-bold{fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+    .world-icons .fill{fill:currentColor}
+    .world-icons .dark{fill:#050505}
+    .world h3{font-size:1.35rem;margin:30px 0 8px;font-weight:560;letter-spacing:-.025em}
+    .world p{margin:0;color:var(--muted);line-height:1.55;font-size:.96rem}
+    .creative-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .creative-card{background:var(--panel);border:1px solid #222225;border-radius:24px;padding:34px;min-height:330px;position:relative;overflow:hidden}
+    .creative-card::after{content:"";position:absolute;right:-42px;bottom:-60px;width:190px;height:190px;border:1px solid #2e2e32;border-radius:50%}
+    .creative-card.red::after{border-color:#6d1d22;box-shadow:0 0 60px rgba(227,27,35,.08)}
+    .creative-card .label{font-size:.72rem;color:var(--accent);letter-spacing:.18em;text-transform:uppercase}
+    .creative-card h3{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.08;letter-spacing:-.04em;margin:90px 0 14px;font-weight:560;max-width:500px}
+    .creative-card p{color:var(--muted);line-height:1.58;max-width:540px;margin:0}
+    .music-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .chip{border:1px solid #303034;border-radius:999px;padding:9px 13px;color:#d2d2d3;font-size:.84rem}
+    .soundtrack-intro{max-width:820px;margin:0 0 46px}
+    .soundtrack-list{border-top:1px solid var(--line)}
+    .track{display:grid;grid-template-columns:84px minmax(220px,.9fr) minmax(280px,1.3fr);gap:28px;align-items:start;padding:30px 0;border-bottom:1px solid var(--line)}
+    .track-index{font-size:.72rem;letter-spacing:.18em;color:#77777d;padding-top:5px}
+    .track.featured .track-index{color:var(--accent)}
+    .track-title{font-size:clamp(1.35rem,2.5vw,2rem);line-height:1.06;letter-spacing:-.035em;font-weight:560;margin:0 0 7px}
+    .track-artist{color:#8f8f94;font-size:.88rem;letter-spacing:.12em;text-transform:uppercase}
+    .track-state{font-size:.74rem;line-height:1.65;letter-spacing:.14em;text-transform:uppercase;color:#b7b7bb}
+    .track-note{display:block;margin-top:8px;color:var(--accent);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+    .soundtrack-signature{margin-top:42px;display:flex;align-items:center;gap:18px;color:#8c8c91;font-size:.75rem;letter-spacing:.24em;text-transform:uppercase}
+    .soundtrack-signature::before{content:"";width:58px;height:1px;background:var(--accent)}
+    .soundtrack-signature b{color:var(--text);font-weight:520}
+    @media(max-width:760px){
+      .track{grid-template-columns:46px 1fr;gap:12px 16px;padding:24px 0}
+      .track-state{grid-column:2;max-width:520px}
+      .track-index{padding-top:4px}
+      .soundtrack-signature{margin-top:34px;letter-spacing:.18em}
+    }
+    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center}
+    .portrait-photo{border-radius:34px;border:1px solid #242427;background:#0b0b0c;position:relative;overflow:hidden;align-self:center}
+    .portrait-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain}
+    .about-copy h3{font-size:clamp(2.2rem,4.5vw,4rem);line-height:1.03;letter-spacing:-.05em;margin:12px 0 24px;font-weight:560}
+    .about-copy p{font-size:1.1rem;line-height:1.72;color:var(--muted);margin:0 0 18px}
+    .about-copy strong{color:var(--text);font-weight:540}
+    .closing{padding:110px 0 120px;text-align:center}
+    .closing h2{max-width:850px;margin:auto}
+    .closing p{color:var(--muted);font-size:1.1rem;line-height:1.65;max-width:650px;margin:28px auto 0}
+    .closing .hero-actions{justify-content:center}
+    footer{border-top:1px solid #171719;padding:30px 0 42px;color:#74747a;font-size:.83rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}.hero-card{min-height:420px}.section-head{grid-template-columns:1fr}.manifesto{grid-template-columns:1fr}.worlds{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.portrait-photo{max-width:620px;margin:0 auto}.creative-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .wrap{padding:0 15px}.chapter-nav-inner{padding:0 15px;gap:16px}.nav{height:58px}.brand{font-size:.88rem;letter-spacing:.2em}.nav-links{display:none}.mobile-create-link{display:inline-flex;align-items:center;gap:4px}.lang-switch{margin-left:0;font-size:.62rem;gap:5px}.hero{padding-top:32px}.hero-card{border-radius:28px;min-height:340px}.worlds{grid-template-columns:1fr}.manifesto article,.creative-card,.world{border-radius:20px}.footer-inner{flex-direction:column;align-items:flex-start}.tag{letter-spacing:.28em;margin-left:.28em}.back-to-top{right:15px;bottom:16px;width:48px;height:48px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.back-to-top,.reveal,.nav-links a,.nav-links a::after{transition:none}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+  <nav class="chapter-nav" aria-label="Seitenkapitel">
+    <div class="chapter-nav-inner">
+      <a href="#idea">Idee</a>
+      <a href="#motion">Motion</a>
+      <a href="#worlds">Welten</a>
+      <a href="#creative">Kreativ</a>
+      <a href="#music">Music</a>
+      <a href="#about">Dahinter</a>
+    </div>
+  </nav>
+  <header class="wrap">
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="brand" href="#top" aria-label="MINDS4MOTION home"><b>MINDS<span class="four">4</span>MOTION</b></a>
+      <a class="mobile-create-link" href="create-together.html">Create Together <span aria-hidden="true">↗</span></a>
+      <div class="lang-switch" aria-label="Sprache"><a class="active" href="../index.html" lang="en">EN</a><span class="sep">/</span><a class="active" href="index.html" lang="de" aria-current="page">DE</a></div>
+      <div class="nav-links">
+        <a href="#idea">Idee</a><a href="#motion">Motion</a><a href="#worlds">Welten</a><a href="#creative">Kreativ</a><a href="#music">Music</a><a href="#about">Dahinter</a><a href="create-together.html">Create Together ↗</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <span class="kicker">#justcreative</span>
+          <h1 id="hero-title">MINDS<span class="four">4</span><br>MOTION</h1>
+          <p class="hero-copy"><strong>Think. Feel. Create.</strong><br>Ein kreativer Raum für das, was uns bewegt — Gedanken, Bilder, Musik, Momente und den Raum dazwischen.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#idea">Zur Idee <span aria-hidden="true">↓</span></a>
+            <a class="btn" href="https://www.instagram.com/minds4motion/" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="MINDS4MOTION Bildmarke">
+          <div class="hero-card-inner"><img class="hero-logo" src="../assets/minds4motion-original-logo.jpg" alt="MINDS4MOTION original logo with red 4 and #justcreative" width="360" height="360" decoding="async"></div>
+        </div>
+      </section>
+
+      <section id="idea" aria-labelledby="idea-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">Warum es existiert</div>
+          <div><h2 id="idea-title">Nicht alles braucht eine Antwort. Manches braucht eine Form.</h2><p class="lead">MINDS4MOTION begann mit Gedanken, die sich nur schwer in Worte fassen ließen, mit Gefühlen, die nicht gelöst werden mussten, und mit Momenten, die länger blieben als erwartet. Gestalten wurde zu einer Möglichkeit, das Unsichtbare sichtbar zu machen.</p></div>
+        </div>
+        <div class="manifesto reveal">
+          <article><span class="num">01 / THINK</span><h3>Wahrnehmen.</h3><p>Bleib neugierig. Hinterfrage, was selbstverständlich scheint. Gib einem unfertigen Gedanken genug Raum, um mehr zu werden.</p></article>
+          <article><span class="num">02 / FEEL</span><h3>Zulassen.</h3><p>Nicht jedes Gefühl ist ein Problem, das gelöst werden muss. Manchmal ist der wichtige Schritt, lange genug bei ihm zu bleiben, um es wirklich wahrzunehmen.</p></article>
+          <article><span class="num">03 / CREATE</span><h3>Sichtbar machen.</h3><p>Worte, Bilder, Musik, Bewegung. Kreativität braucht keine Erlaubnis — und auch keinen Künstler-Titel.</p></article>
+        </div>
+        <p class="quote reveal">„Vielleicht ist <em>#justcreative</em> einfach die Erlaubnis zu gestalten, zu fühlen und zu denken, ohne immer einen Schluss ziehen zu müssen.“</p>
+      </section>
+
+      <section id="motion" class="motion-state" aria-labelledby="motion-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">MOTION / STATE</div>
+          <div><h2 id="motion-title">Was bewegt dich gerade?</h2><p class="lead">Wähle einen Zustand. Dann bewege dich durch ihn. Denken, Fühlen und Gestalten werden zu Bewegung — jedes Mal anders, ohne eine endgültige Antwort zu brauchen.</p></div>
+        </div>
+        <div class="motion-shell reveal" id="motion-shell">
+          <canvas class="motion-canvas" id="motion-canvas" aria-hidden="true"></canvas>
+          <div class="motion-ui">
+            <div class="motion-top">
+              <span class="motion-index">Interaktives Fragment / 01</span>
+              <span class="motion-hint">Ziehen zum Formen · außerhalb scrollen</span>
+            </div>
+            <div class="motion-center">
+              <p class="motion-question">Think. Feel. Create.</p>
+              <div class="motion-choices" role="group" aria-label="Wähle einen kreativen Zustand">
+                <button class="motion-choice is-active" type="button" data-motion-state="think" aria-pressed="true">THINK</button>
+                <button class="motion-choice" type="button" data-motion-state="feel" aria-pressed="false">FEEL</button>
+                <button class="motion-choice" type="button" data-motion-state="create" aria-pressed="false">CREATE</button>
+              </div>
+              <p class="motion-phrase" id="motion-phrase" aria-live="polite">Nicht jeder Gedanke braucht einen Schluss.</p>
+            </div>
+            <div class="motion-bottom">
+              <span class="motion-signature">MINDS <b>→</b> MOTION</span>
+              <span class="motion-coordinate" id="motion-coordinate">x 050 · y 050</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="worlds" aria-labelledby="worlds-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">Vier Welten</div>
+          <div><h2 id="worlds-title">Fight. Family. Love. Joy.</h2><p class="lead">Unterschiedliche Energien. Ein Mensch. Die Gegensätze sind kein Rauschen — sie gehören zum Bild.</p></div>
+        </div>
+        <div class="worlds reveal">
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48">
+                <path class="fill" d="M27 4c2 8-5 10-2 17 3-2 5-5 5-8 7 5 11 12 10 20-1 7-7 11-16 11S8 39 8 31c0-7 5-12 11-17-1 6 1 9 4 11-1-8 5-12 4-21Z"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <path class="stroke-bold" d="M12 38 21 10M24 38l9-28"/>
+                <path class="icon-red stroke-bold" d="m31 38 3-9"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <circle class="stroke" cx="24" cy="24" r="15"/>
+                <circle class="icon-red fill" cx="24" cy="24" r="6"/>
+              </svg>
+            </div>
+            <div><h3>Fight</h3><p>Antrieb, Disziplin und die Bereitschaft, durch Widerstand hindurchzugehen.</p></div>
+          </article>
+
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <circle class="stroke" cx="15" cy="16" r="5"/>
+                <circle class="stroke" cx="33" cy="16" r="5"/>
+                <path class="stroke-bold" d="M11 35c2-7 7-11 13-11s11 4 13 11"/>
+                <path class="icon-red stroke-bold" d="M20 16h8"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <circle class="stroke-bold" cx="24" cy="24" r="17"/>
+                <path class="stroke" d="m24 14 6 4-2 7h-8l-2-7 6-4Z"/>
+                <path class="stroke" d="m18 18-7 4m19-4 7 4m-17 3-4 8m12-8 4 8m-12 0h8"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <path class="icon-red stroke-bold" d="M13 9c3 9 4 17 5 30"/>
+                <path class="stroke-bold" d="M23 9c3 9 4 17 5 30M33 9c3 9 4 17 5 30"/>
+              </svg>
+            </div>
+            <div><h3>Family</h3><p>Präsenz, gemeinsame Momente und die Dinge, die wichtiger sind als Produktivität.</p></div>
+          </article>
+
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48">
+                <path class="fill" d="M24 41 8 26C0 18 5 7 15 7c5 0 8 3 9 6 2-3 5-6 10-6 10 0 15 11 6 19L24 41Z"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <rect class="fill" x="9" y="10" width="8" height="28" rx="1"/>
+                <rect class="icon-red fill" x="20" y="10" width="8" height="28" rx="1"/>
+                <rect class="fill" x="31" y="10" width="8" height="28" rx="1"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <path class="icon-red stroke" d="M24 11v13M24 11c-5 1-8 4-10 8 5-1 8 0 10 3m0-11c5 1 8 4 10 8-5-1-8 0-10 3"/>
+                <path class="stroke" d="M7 31h34M10 36c5-4 9-4 14 0 5-4 9-4 14 0"/>
+              </svg>
+            </div>
+            <div><h3>Love</h3><p>Wärme, Italien, Meer, Nähe — und der Mut, tief zu fühlen.</p></div>
+          </article>
+
+          <article class="world">
+            <div class="world-icons" aria-hidden="true">
+              <svg class="icon-red" viewBox="0 0 48 48">
+                <circle class="stroke" cx="24" cy="24" r="8"/>
+                <path class="stroke" d="M24 5v6m0 26v6M5 24h6m26 0h6M10.5 10.5l4.5 4.5m18 18 4.5 4.5m0-27L33 15m-18 18-4.5 4.5"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <rect class="stroke" x="9" y="10" width="30" height="28" rx="3"/>
+                <path class="stroke" d="M24 10v28M9 24h30"/>
+              </svg>
+              <svg class="icon-white" viewBox="0 0 48 48">
+                <path class="stroke-bold" d="m6 37 11-17 6 8 7-14 12 23H6Z"/>
+                <path class="icon-red stroke-bold" d="m27 20 3-6 4 7"/>
+              </svg>
+            </div>
+            <div><h3>Joy</h3><p>Lagom. Berge. Licht. Nicht zu wenig, nicht zu viel. Genau richtig.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="creative" aria-labelledby="creative-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">Kreative Sprache</div>
+          <div><h2 id="creative-title">Ein Bild kann denken. Ein Track kann erinnern. Eine Linie kann bewegen.</h2><p class="lead">Die Arbeiten sind bewusst gemischt: visuelle Reduktion, rohe Farbe, persönliche Fragmente, Neuinterpretationen, Musik und kleine Serien, die Emotion mit Bewegung verbinden.</p></div>
+        </div>
+        <div class="creative-grid reveal">
+          <article class="creative-card red"><span class="label">Visual</span><h3>Schwarz. Weiß. Rot. Und manchmal alles andere.</h3><p>Die Kernidentität bleibt reduziert und bewusst. Farbe erscheint dort, wo sie Bedeutung trägt — nie nur als Dekoration.</p></article>
+          <article class="creative-card"><span class="label">Music</span><h3>Emotion braucht einen Puls.</h3><p>Musik ist hier kein Hintergrund. Manche Tracks werden zu Ankern — verbunden damit, wer wir waren, wer wir sind und wohin wir wollen.</p><div class="music-line"><a class="chip" href="#music">Fünf Tracks. Fünf Zustände. ↓</a></div></article>
+          <article class="creative-card"><span class="label">Series</span><h3>Kreativität vor Erklärung.</h3><p>Manche Arbeit beginnt ohne Plan. Eine Linie führt zur nächsten. Ein Kind malt. Ein Moment wird zur Sequenz. Bedeutung darf später kommen.</p></article>
+          <article class="creative-card red"><span class="label">Reduction</span><h3>Weniger Rauschen. Mehr Wahrnehmung.</h3><p>MINDS4MOTION interessiert, was bleibt, wenn Ablenkung, Übertreibung und künstliche Perfektion verschwinden.</p></article>
+        </div>
+      </section>
+
+      <section id="music" aria-labelledby="music-title">
+        <div class="section-head reveal">
+          <div class="eyebrow">Musik / Persönlicher Soundtrack</div>
+          <div>
+            <h2 id="music-title">Fünf Tracks. Fünf Zustände.</h2>
+            <p class="lead">Manche Songs bleiben, weil sie sich damit verbinden, wer wir waren, wer wir sind — oder wohin wir wollen.</p>
+          </div>
+        </div>
+
+        <div class="soundtrack-list reveal">
+          <article class="track featured">
+            <div class="track-index">01</div>
+            <div>
+              <h3 class="track-title">Light Falls</h3>
+              <div class="track-artist">EMBRZ</div>
+              <span class="track-note">Ein Anker seit 2023.</span>
+            </div>
+            <div class="track-state">Tiefe · Erinnerung · Was wirklich wichtig ist</div>
+          </article>
+
+          <article class="track">
+            <div class="track-index">02</div>
+            <div>
+              <h3 class="track-title">Wie Liebe geht</h3>
+              <div class="track-artist">Lucien Voss</div>
+            </div>
+            <div class="track-state">Rückblick · Verstehen · Selbstreflexion · Was bleibt</div>
+          </article>
+
+          <article class="track">
+            <div class="track-index">03</div>
+            <div>
+              <h3 class="track-title">Disco Mare</h3>
+              <div class="track-artist">Luca Vasta</div>
+            </div>
+            <div class="track-state">Lebendigkeit · Sehnsucht · Leichtigkeit · Vorwärts</div>
+          </article>
+
+          <article class="track">
+            <div class="track-index">04</div>
+            <div>
+              <h3 class="track-title">Heartbeat</h3>
+              <div class="track-artist">Hessian &amp; Courtney Storm</div>
+            </div>
+            <div class="track-state">Energie · Verbundenheit · Rhythmus · Antrieb</div>
+          </article>
+
+          <article class="track">
+            <div class="track-index">05</div>
+            <div>
+              <h3 class="track-title">Tranquil</h3>
+              <div class="track-artist">Virtua &amp; Akraa</div>
+            </div>
+            <div class="track-state">Klarheit · Innere Ruhe · Fokus · Zentriert</div>
+          </article>
+        </div>
+
+        <div class="soundtrack-signature reveal"><b>Mein Soundtrack.</b> Mein Weg.</div>
+      </section>
+
+      <section id="about" aria-labelledby="about-title">
+        <div class="about reveal">
+          <figure class="portrait-photo"><img src="data:image/jpeg;base64,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" alt="MINDS4MOTION portrait collage featuring Michael, the M mark and personal visual fragments" width="240" height="240" loading="lazy" decoding="async"></figure>
+          <div class="about-copy"><span class="eyebrow">Hinter MINDS4MOTION</span><h3 id="about-title">Das Gesicht. Der Kopf. Der Mensch dahinter.</h3><p>Ich bin Michael. <strong>Kein Künstler von Beruf — und genau das ist Teil der Idee.</strong></p><p>MINDS4MOTION begann mit Gedanken, die ich nicht ganz in Worte fassen konnte.<br>Gefühlen, die keine Antwort brauchten.<br>Momenten, die länger blieben als erwartet.</p><p>Also begann ich zu gestalten.</p><p>Nicht, um alles zu erklären.<br>Sondern um manchen Dingen eine Form zu geben. Etwas sichtbar zu machen, während es noch entsteht.</p><p>Ich denke viel, fühle tief, bleibe neugierig und gestalte Dinge, wenn Worte nicht ganz ausreichen. Irgendwann wurde <strong>#justcreative mehr als ein Hashtag. Es wurde zu einer Erlaubnis.</strong></p><p>Zu gestalten, ohne Künstler sein zu müssen.<br>Zu fühlen, ohne es rechtfertigen zu müssen.<br>Zu denken, ohne immer einen Schluss zu brauchen.</p><p>Und da ist noch eine Idee, die bei mir geblieben ist:</p><p><strong>1 + 1 ≥ 2.</strong></p><p>Ein technischer Ausdruck, eine persönliche Überzeugung: Was wir verbinden, kann mehr werden als das, was getrennt voneinander existierte.</p><p>Das ist MINDS4MOTION.</p><p><strong>Weiter denken.<br>Weiter fühlen.<br>Weiter gestalten.</strong></p></div>
+        </div>
+      </section>
+
+      <section class="closing reveal" aria-labelledby="closing-title">
+        <span class="kicker">#justcreative</span>
+        <h2 id="closing-title">Weiter denken.<br>Weiter fühlen.<br>Weiter gestalten.</h2>
+        <p>Kein endloser Feed, den es zu erklären gilt. Kein Versprechen, jeden Tag zu posten. Nur Dinge, die es wert sind, sichtbar zu werden, wenn sie bereit sind.</p>
+        <div class="hero-actions"><a class="btn primary" href="create-together.html">Create Together <span aria-hidden="true">↗</span></a><a class="btn" href="https://www.instagram.com/minds4motion/" target="_blank" rel="noopener">Auf Instagram folgen <span aria-hidden="true">↗</span></a><button class="btn" id="contact-email" type="button">Kontakt aufnehmen <span aria-hidden="true">↗</span></button></div>
+      </section>
+    </div>
+  </main>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 14 6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> MINDS4MOTION</span><span>#justcreative · Kein Tracking · Keine Cookies · <a href="imprint.html">Impressum</a> · <a href="privacy.html">Datenschutz</a></span></div></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('contact-email').addEventListener('click', function () {
+      const mailbox = ['m','d'].join('');
+      const domain = ['minds','4','motion'].join('');
+      const address = mailbox + '@' + domain + '.' + ['c','o','m'].join('');
+      window.location.href = 'mailto:' + address + '?subject=' + encodeURIComponent('MINDS4MOTION');
+    });
+
+    const progressBar = document.getElementById('scroll-progress-bar');
+    const topButton = document.getElementById('back-to-top');
+    const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+    const chapterLinks = [...document.querySelectorAll('.chapter-nav a[href^="#"]')];
+    const sectionLinks = [...navLinks, ...chapterLinks];
+    const sections = [...new Set(sectionLinks
+      .map(link => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean))];
+
+    function updateScrollUI() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(100, Math.max(0, scrollTop / scrollable * 100)) : 0;
+      progressBar.style.width = progress + '%';
+      topButton.classList.toggle('is-visible', scrollTop > 620);
+    }
+
+    topButton.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+
+    if ('IntersectionObserver' in window && sections.length) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          sectionLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id));
+          const activeChapter = chapterLinks.find(link => link.getAttribute('href') === '#' + entry.target.id);
+          if (activeChapter) activeChapter.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+        });
+      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+      sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    const motionShell = document.getElementById('motion-shell');
+    const motionCanvas = document.getElementById('motion-canvas');
+    const motionPhrase = document.getElementById('motion-phrase');
+    const motionCoordinate = document.getElementById('motion-coordinate');
+    const motionButtons = [...document.querySelectorAll('.motion-choice')];
+
+    if (motionShell && motionCanvas && motionPhrase) {
+      const ctx = motionCanvas.getContext('2d', { alpha: true });
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const pointer = { x: .5, y: .5, active: false, strength: 0, pulse: 0 };
+      let motionState = 'think';
+      let motionVisible = true;
+      let width = 0;
+      let height = 0;
+      let lastTime = performance.now();
+
+      const motionStates = {
+        think: {
+          phrases: [
+            'Nicht jeder Gedanke braucht einen Schluss.',
+            'Questions can be places too.',
+            '1 + 1 ≥ 2.',
+            'Stay curious long enough for the obvious to change.',
+            'A thought can move before it becomes an answer.'
+          ],
+          speed: .08, drift: .08, pull: 1.15, red: .16
+        },
+        feel: {
+          phrases: [
+            'Some things do not need to be understood. Only felt.',
+            'Stay with it long enough to really notice it.',
+            'Not everything needs an answer.',
+            'Home is a feeling.',
+            'Let the feeling exist before you name it.'
+          ],
+          speed: .05, drift: .12, pull: .95, red: .28
+        },
+        create: {
+          phrases: [
+            'Make the invisible visible.',
+            'Create without needing to be an artist.',
+            '#justcreative.',
+            'Follow the line and see where it goes.',
+            'Permission is sometimes the first creative act.'
+          ],
+          speed: .11, drift: .16, pull: 1.35, red: .52
+        }
+      };
+
+      const particles = Array.from({ length: 42 }, (_, i) => {
+        const angle = Math.random() * Math.PI * 2;
+        const ambient = .000012 + Math.random() * .000018;
+        return {
+          x: Math.random(), y: Math.random(),
+          vx: 0, vy: 0,
+          baseVx: Math.cos(angle) * ambient,
+          baseVy: Math.sin(angle) * ambient,
+          seed: Math.random() * Math.PI * 2,
+          size: i % 9 === 0 ? 1.7 : 1
+        };
+      });
+
+      function resizeMotionCanvas() {
+        const rect = motionShell.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        motionCanvas.width = Math.round(width * dpr);
+        motionCanvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function setMotionState(next) {
+        if (!motionStates[next]) return;
+        motionState = next;
+        motionButtons.forEach(button => {
+          const active = button.dataset.motionState === next;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        const list = motionStates[next].phrases;
+        let phrase = list[Math.floor(Math.random() * list.length)];
+        if (phrase === motionPhrase.textContent.trim() && list.length > 1) phrase = list[(list.indexOf(phrase) + 1) % list.length];
+        motionPhrase.classList.add('is-changing');
+        window.setTimeout(() => {
+          motionPhrase.textContent = phrase;
+          motionPhrase.classList.remove('is-changing');
+        }, 150);
+      }
+
+      let lastMotionButtonActivation = 0;
+      function activateMotionButton(button) {
+        const now = performance.now();
+        if (now - lastMotionButtonActivation < 180) return;
+        lastMotionButtonActivation = now;
+        setMotionState(button.dataset.motionState);
+      }
+
+      motionButtons.forEach(button => {
+        button.addEventListener('pointerup', event => {
+          event.stopPropagation();
+          activateMotionButton(button);
+        });
+        button.addEventListener('click', event => {
+          event.stopPropagation();
+          activateMotionButton(button);
+        });
+      });
+
+      function setPointerFromClient(clientX, clientY, pulse) {
+        const rect = motionShell.getBoundingClientRect();
+        pointer.x = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        pointer.y = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
+        pointer.active = true;
+        pointer.strength = 1;
+        if (pulse) pointer.pulse = 1;
+        if (motionCoordinate) {
+          motionCoordinate.textContent = 'x ' + String(Math.round(pointer.x * 100)).padStart(3,'0') + ' · y ' + String(Math.round(pointer.y * 100)).padStart(3,'0');
+        }
+      }
+
+      function updateCanvasPointer(event, pulse) {
+        const rect = motionShell.getBoundingClientRect();
+        pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+        pointer.y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+        pointer.active = true;
+        pointer.strength = 1;
+        if (pulse) pointer.pulse = 1;
+        if (motionCoordinate) {
+          motionCoordinate.textContent = 'x ' + String(Math.round(pointer.x * 100)).padStart(3,'0') + ' · y ' + String(Math.round(pointer.y * 100)).padStart(3,'0');
+        }
+      }
+
+      motionCanvas.addEventListener('pointerdown', event => {
+        event.preventDefault();
+        updateCanvasPointer(event, true);
+        if (motionCanvas.setPointerCapture) {
+          try { motionCanvas.setPointerCapture(event.pointerId); } catch (error) {}
+        }
+      });
+
+      motionCanvas.addEventListener('pointermove', event => {
+        if (!pointer.active && event.pointerType !== 'mouse') return;
+        event.preventDefault();
+        updateCanvasPointer(event, false);
+      });
+
+      function releaseCanvasPointer(event) {
+        pointer.active = false;
+        if (event && motionCanvas.releasePointerCapture && motionCanvas.hasPointerCapture && motionCanvas.hasPointerCapture(event.pointerId)) {
+          try { motionCanvas.releasePointerCapture(event.pointerId); } catch (error) {}
+        }
+      }
+
+      motionCanvas.addEventListener('pointerup', releaseCanvasPointer);
+      motionCanvas.addEventListener('pointercancel', releaseCanvasPointer);
+      motionCanvas.addEventListener('lostpointercapture', () => { pointer.active = false; });
+      motionCanvas.addEventListener('pointerleave', event => {
+        if (event.pointerType === 'mouse' && !event.buttons) pointer.active = false;
+      });
+
+      function renderMotion(now) {
+        const dt = Math.min(32, now - lastTime || 16);
+        const frame = dt / 16.667;
+        lastTime = now;
+
+        if (motionVisible && width && height) {
+          ctx.clearRect(0, 0, width, height);
+          const config = motionStates[motionState];
+          const t = now * .001;
+
+          pointer.strength *= Math.pow(.94, frame);
+          pointer.pulse *= Math.pow(.90, frame);
+
+          particles.forEach((p, index) => {
+            const wobbleX = Math.sin(t * config.speed + p.seed) * .0000009 * config.drift * frame;
+            const wobbleY = Math.cos(t * config.speed * .83 + p.seed * 1.7) * .0000009 * config.drift * frame;
+            p.vx += wobbleX;
+            p.vy += wobbleY;
+
+            if (pointer.active || pointer.strength > .03) {
+              const dx = pointer.x - p.x;
+              const dy = pointer.y - p.y;
+              const dist = Math.max(.025, Math.hypot(dx,dy));
+              const radius = .42;
+              const proximity = Math.max(0, 1 - dist / radius);
+
+              if (proximity > 0) {
+                const force = proximity * proximity * config.pull * .00048 * Math.max(.4, pointer.strength) * frame;
+                p.vx += dx / dist * force;
+                p.vy += dy / dist * force;
+              }
+            }
+
+            p.vx *= Math.pow(.93, frame);
+            p.vy *= Math.pow(.93, frame);
+
+            const maxVelocity = .00042;
+            const velocity = Math.hypot(p.vx,p.vy);
+            if (velocity > maxVelocity) {
+              p.vx = p.vx / velocity * maxVelocity;
+              p.vy = p.vy / velocity * maxVelocity;
+            }
+
+            const ambientScale = motionState === 'create' ? 1.16 : motionState === 'feel' ? .84 : 1;
+            p.x += (p.baseVx * ambientScale + p.vx) * frame + Math.sin(t * .10 + p.seed) * .0000014 * frame;
+            p.y += (p.baseVy * ambientScale + p.vy) * frame + Math.cos(t * .09 + p.seed) * .0000014 * frame;
+
+            if (p.x < -.04) p.x = 1.04;
+            if (p.x > 1.04) p.x = -.04;
+            if (p.y < -.04) p.y = 1.04;
+            if (p.y > 1.04) p.y = -.04;
+
+            const x = p.x * width;
+            const y = p.y * height;
+            const isRed = (index % Math.max(2, Math.round(1 / config.red))) === 0;
+            ctx.beginPath();
+            ctx.arc(x, y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = isRed ? 'rgba(227,27,35,.76)' : 'rgba(247,247,245,.42)';
+            ctx.fill();
+          });
+
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const a = particles[i], b = particles[j];
+              const dx = (a.x - b.x) * width;
+              const dy = (a.y - b.y) * height;
+              const dist = Math.hypot(dx,dy);
+              const maxDist = motionState === 'create' ? 122 : motionState === 'feel' ? 138 : 112;
+              if (dist < maxDist) {
+                const alpha = (1 - dist / maxDist) * (motionState === 'feel' ? .11 : .15);
+                ctx.beginPath();
+                ctx.moveTo(a.x * width, a.y * height);
+                ctx.lineTo(b.x * width, b.y * height);
+                ctx.strokeStyle = 'rgba(247,247,245,' + alpha.toFixed(3) + ')';
+                ctx.lineWidth = .65;
+                ctx.stroke();
+              }
+            }
+          }
+
+          if (pointer.active || pointer.strength > .03) {
+            const px = pointer.x * width;
+            const py = pointer.y * height;
+            const strength = Math.max(pointer.active ? .65 : 0, pointer.strength);
+
+            particles.forEach(p => {
+              const x = p.x * width;
+              const y = p.y * height;
+              const dist = Math.hypot(x - px, y - py);
+              if (dist < 118) {
+                const alpha = (1 - dist / 118) * .28 * strength;
+                ctx.beginPath();
+                ctx.moveTo(px,py);
+                ctx.lineTo(x,y);
+                ctx.strokeStyle = 'rgba(227,27,35,' + alpha.toFixed(3) + ')';
+                ctx.lineWidth = .9;
+                ctx.stroke();
+              }
+            });
+
+            const glow = ctx.createRadialGradient(px,py,0,px,py,105);
+            glow.addColorStop(0,'rgba(227,27,35,' + (.10 * strength).toFixed(3) + ')');
+            glow.addColorStop(.35,'rgba(227,27,35,' + (.045 * strength).toFixed(3) + ')');
+            glow.addColorStop(1,'rgba(227,27,35,0)');
+            ctx.fillStyle = glow;
+            ctx.fillRect(px-105,py-105,210,210);
+
+            const ringRadius = 18 + (1 - pointer.pulse) * 24;
+            const ringAlpha = Math.max(.12, .5 * pointer.pulse) * strength;
+            ctx.beginPath();
+            ctx.arc(px,py,ringRadius,0,Math.PI*2);
+            ctx.strokeStyle = 'rgba(227,27,35,' + ringAlpha.toFixed(3) + ')';
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(px,py,2.4,0,Math.PI*2);
+            ctx.fillStyle = 'rgba(227,27,35,' + (.82 * strength).toFixed(3) + ')';
+            ctx.fill();
+          }
+        }
+
+        if (!reducedMotion) requestAnimationFrame(renderMotion);
+      }
+
+      resizeMotionCanvas();
+      window.addEventListener('resize', resizeMotionCanvas);
+
+      if ('IntersectionObserver' in window) {
+        const motionObserver = new IntersectionObserver(entries => {
+          motionVisible = entries.some(entry => entry.isIntersecting);
+        }, { threshold: .05 });
+        motionObserver.observe(motionShell);
+      }
+
+      if (reducedMotion) {
+        setMotionState('think');
+        particles.slice(0,18).forEach((p,index) => {
+          const x=p.x*width,y=p.y*height;
+          ctx.beginPath();ctx.arc(x,y,index%6===0?2:1,0,Math.PI*2);
+          ctx.fillStyle=index%5===0?'rgba(227,27,35,.7)':'rgba(247,247,245,.42)';
+          ctx.fill();
+        });
+      } else {
+        requestAnimationFrame(renderMotion);
+      }
+    }
+
+    updateScrollUI();
+    window.addEventListener('scroll', updateScrollUI, { passive: true });
+    window.addEventListener('resize', updateScrollUI);
+  </script>
+</body>
+</html>
