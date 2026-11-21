@@ -1,8 +1,22 @@
-# MINDS4MOTION Website — v1.7.0
+# MINDS4MOTION Website — v1.7.1
 
 **Release:** 18 November 2026  
-**Status:** bilingual DE / EN language layer — ready for merge
+**Status:** Behind portrait palette alignment — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
+
+## v1.7.1 — Behind portrait palette alignment
+
+Evidence-driven visual refinement based on the final live review.
+
+- Replaced the previous warm-toned Behind portrait with the approved black / white / red treatment.
+- Keeps Michael and the composition intact; the change is limited to visual tonality and brand integration.
+- Added the portrait as a dedicated repository asset: `assets/michael-behind-minds4motion-bw-red.jpg`.
+- Updated both EN and DE landing pages to use the same asset.
+- No copy, navigation, interaction or Create Together logic changed.
+
+This is a maintenance-level exception to the v1.7.0 feature cut, not a reopening of feature development.
+
+---
 
 ## v1.7.0 — DE / EN language layer
 
