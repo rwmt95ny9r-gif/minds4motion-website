@@ -1,7 +1,7 @@
-# MINDS4MOTION Website — v1.7.0
+# MINDS4MOTION Website — v1.7.3
 
 **Release:** 18 November 2026  
-**Status:** bilingual DE / EN language layer — ready for merge
+**Status:** language-switch consistency fix — ready for merge
 **Repository:** `rwmt95ny9r-gif/minds4motion-website`
 
 ## v1.7.0 — DE / EN language layer
